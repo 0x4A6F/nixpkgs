@@ -879,6 +879,8 @@ let
     linuxHeaders = linuxHeaders_3_14;
   };
 
+  ecdsautils = callPackage ../tools/security/ecdsautils { };
+
   edac-utils = callPackage ../os-specific/linux/edac-utils { };
 
   eggdrop = callPackage ../tools/networking/eggdrop { };
@@ -890,6 +892,8 @@ let
   facter = callPackage ../tools/system/facter {};
 
   fasd = callPackage ../tools/misc/fasd { };
+
+  fastd = callPackage ../tools/networking/fastd { };
 
   fop = callPackage ../tools/typesetting/fop { };
 
@@ -7454,6 +7458,8 @@ let
   libu2f-host = callPackage ../development/libraries/libu2f-host { };
 
   libu2f-server = callPackage ../development/libraries/libu2f-server { };
+
+  libuecc = callPackage ../development/libraries/libuecc { };
 
   libunistring = callPackage ../development/libraries/libunistring { };
 
