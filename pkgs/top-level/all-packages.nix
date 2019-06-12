@@ -1820,7 +1820,7 @@ in
 
   roundcubePlugins = dontRecurseIntoAttrs (callPackage ../servers/roundcube/plugins { });
 
-  routinator = callPackage ../servers/routinator { };
+  routinator = (callPackage ../servers/routinator { }).routinator {};
 
   rsbep = callPackage ../tools/backup/rsbep { };
 
