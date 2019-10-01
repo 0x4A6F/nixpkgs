@@ -28171,6 +28171,8 @@ in
 
   qubes-core-vchan-xen = callPackage ../applications/qubes/qubes-core-vchan-xen {};
 
+  qubes-core-qrexec = callPackage ../applications/qubes/qubes-core-qrexec {};
+
   coz = callPackage ../development/tools/analysis/coz {};
 
   keycard-cli = callPackage ../tools/security/keycard-cli {};
