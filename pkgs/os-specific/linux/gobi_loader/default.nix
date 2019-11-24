@@ -11,6 +11,9 @@ stdenv.mkDerivation rec {
     sha256 = "0jkmpqkiddpxrzl2s9s3kh64ha48m00nn53f82m1rphw8maw5gbq";
   };
 
+  patches = [
+    ./Makefile.patch
+  ];
   makeFlags = "prefix=${placeholder "out"}";
 
   meta = with stdenv.lib; {
