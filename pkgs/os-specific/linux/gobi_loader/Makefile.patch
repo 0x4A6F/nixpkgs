@@ -1,0 +1,22 @@
+--- a/Makefile	2010-06-24 17:13:46.000000000 +0000
++++ b/Makefile	2019-11-24 10:36:07.840582863 +0000
+@@ -6,14 +6,13 @@ gobi_loader: gobi_loader.c
+ all: gobi_loader
+ 
+ install: gobi_loader
+-	install -D gobi_loader ${prefix}/lib/udev/gobi_loader
+-	install -D 60-gobi.rules ${prefix}/lib/udev/rules.d/60-gobi.rules
+-	mkdir -p ${prefix}/lib/firmware
+-	-udevadm control --reload-rules
++	install -D gobi_loader ${prefix}/bin/gobi_loader
++	install -D 60-gobi.rules ${prefix}/lib/udev/rules.d/60-gobi.rules
++	mkdir -p ${prefix}/lib/firmware
+ 
+ uninstall:
+-	-rm $(prefix)/lib/udev/gobi_loader
+-	-rm $(prefix)/lib/udev/rules.d/60-gobi.rules
++	-rm ${prefix}/bin/gobi_loader
++	-rm ${prefix}/lib/udev/rules.d/60-gobi.rules
+ 
+ clean:
+ 	-rm gobi_loader
