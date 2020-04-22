@@ -1891,6 +1891,8 @@ in
 
   grobi = callPackage ../tools/X11/grobi { };
 
+  grex = callPackage ../tools/text/grex { };
+
   gscan2pdf = callPackage ../applications/graphics/gscan2pdf { };
 
   gsctl = callPackage ../applications/misc/gsctl { };
