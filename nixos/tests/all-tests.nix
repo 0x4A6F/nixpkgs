@@ -387,6 +387,7 @@ in
   restic = handleTest ./restic.nix {};
   robustirc-bridge = handleTest ./robustirc-bridge.nix {};
   roundcube = handleTest ./roundcube.nix {};
+  routinator = handleTest ./routinator.nix {};
   rspamd = handleTest ./rspamd.nix {};
   rss2email = handleTest ./rss2email.nix {};
   rsyslogd = handleTest ./rsyslogd.nix {};
