@@ -5,24 +5,29 @@
 , pam
 , pandoc
 , lsb-release
+, python3
+, pythonPackages
 }:
 
 stdenv.mkDerivation rec {
   pname = "qubes-core-qrexec";
-  version = "4.1.1";
+  version = "4.1.8";
 
   src = fetchFromGitHub {
     owner = "QubesOS";
     repo = pname;
     rev = "v${version}";
-    sha256 = "0clkkk4vw7fxydxkwwrgvbf3f05r30wxpg2qrmpym5fmbs6y8gic";
+    sha256 = "sha256:0dja161ppvzvz0i597iba6vz2x9x5zg4mz9x4wkziv7w1k0j5q1k";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with pythonPackages; [
     pkgconfig
     qubes-core-vchan-xen
     lsb-release
+    python3
+    setuptools
   ];
+
   buildInputs = [
     qubes-core-vchan-xen
     pam
@@ -30,19 +35,25 @@ stdenv.mkDerivation rec {
   ];
 
   buildPhase = ''
-    export PKG_CONFIG_PATH="${qubes-core-vchan-xen}:$PKG_CONFIG_PATH"
     export BACKEND_VMM="xen"
-    make all-vm PREFIX=/
+    make all-base all-vm DESTDIR=$out PREFIX=/ LIBDIR=$out/include
+  # make all-base DESTDIR=$out PREFIX=/ LIBDIR=$out/include
+  # make all-vm DESTDIR=$out PREFIX=/ LIBDIR=$out/include
+  # make all-dom0 DESTDIR=$out PREFIX=/ LIBDIR=$out/include
   '';
+
   installPhase = ''
-    make install-vm DESTDIR=$out PREFIX=/
+    make install-base install-vm DESTDIR=$out PREFIX=/
+  # make install-base DESTDIR=$out PREFIX=/
+  # make install-vm DESTDIR=$out PREFIX=/
+  # make install-dom0 DESTDIR=$out PREFIX=/
   '';
 
   meta = with stdenv.lib; {
-    description = "";
+    description = "Qubes OS Remote Procedure Call (RPC) protocol";
     homepage = "https://github.com/QubesOS/qubes-core-qrexec";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ "0x4A6F" ];
+    maintainers = with maintainers; [ _0x4A6F ];
     platforms = platforms.unix;
   };
 }
