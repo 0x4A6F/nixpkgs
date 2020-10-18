@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = config.services.sourcehut;
+  cfgIni = cfg.settings;
   scfg = cfg.git;
   iniKey = "git.sr.ht";
 
@@ -47,6 +48,11 @@ in {
   };
 
   config = with scfg; lib.mkIf (cfg.enable && elem "git" cfg.services) {
+    assertions =
+      [
+        { assertion = with cfgIni."git.sr.ht"; outgoing-domain != null;
+        message = "If git.sr.ht is used, an outgoing domain must be specified for patchset preparation"; }
+      ];
     # sshd refuses to run with `Unsafe AuthorizedKeysCommand ... bad ownership or modes for directory /nix/store`
     environment.etc."ssh/gitsrht-dispatch" = {
       mode = "0755";
@@ -60,18 +66,14 @@ in {
     environment.systemPackages = [ pkgs.git ];
 
     users = {
-      users = [
-        { name = user;
-          group = user;
+      users.${user} =
+        { group = user;
           # https://stackoverflow.com/questions/22314298/git-push-results-in-fatal-protocol-error-bad-line-length-character-this
           # Probably could use gitsrht-shell if output is restricted to just parameters...
           shell = "${pkgs.bash}/bin/bash";
-          description = "git.sr.ht user"; }
-      ];
+          description = "git.sr.ht user"; };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services = {
@@ -130,7 +132,7 @@ in {
             Restart = "always";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker --loglevel=info";
+          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n gitsrht-webhooks@%%h --loglevel=info";
         };
       };
     };
@@ -155,6 +157,10 @@ in {
       "git.sr.ht".oauth-client-secret = mkDefault null;
       # Path to git repositories on disk
       "git.sr.ht".repos = mkDefault "/var/lib/git";
+
+      # Patchset preparation
+      "git.sr.ht".outgoing-domain = mkDefault null;
+
 
       # The authorized keys hook uses this to dispatch to various handlers
       # The format is a program to exec into as the key, and the user to match as the

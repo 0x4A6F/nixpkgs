@@ -8,6 +8,7 @@ let
   scfg = cfg.meta;
   iniKey = "meta.sr.ht";
 
+  rcfg = config.services.redis;
   drv = pkgs.sourcehut.metasrht;
 in {
   options.services.sourcehut.meta = {
@@ -51,15 +52,12 @@ in {
       ];
 
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "meta.sr.ht user"; }
-      ];
+          description = "meta.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.cron.systemCronJobs = [ "0 0 * * * ${cfg.python}/bin/metasrht-daily" ];
@@ -119,7 +117,7 @@ in {
             Restart = "always";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker --loglevel=info";
+          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n metasrht@%%h --loglevel=info";
         };
       };
     };
@@ -134,6 +132,8 @@ in {
       "meta.sr.ht".connection-string = mkDefault "postgresql:///${database}?user=${user}&host=/var/run/postgresql";
       # Set to "yes" to automatically run migrations on package upgrade.
       "meta.sr.ht".migrate-on-upgrade = mkDefault "yes";
+      # The redis connection used for the webhooks worker
+      "meta.sr.ht".webhooks = mkDefault "redis://${rcfg.bind}:${toString rcfg.port}/1";
       # If "yes", the user will be sent the stock sourcehut welcome emails after
       # signup (requires cron to be configured properly). These are specific to the
       # sr.ht instance so you probably want to patch these before enabling this.

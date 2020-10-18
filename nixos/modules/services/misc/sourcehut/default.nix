@@ -22,6 +22,9 @@ in {
       ./man.nix
       ./meta.nix
       ./paste.nix
+      ./dispatch.nix
+      ./lists.nix
+      ./builds.nix
     ];
 
   options.services.sourcehut = {

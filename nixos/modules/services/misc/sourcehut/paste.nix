@@ -45,15 +45,12 @@ in {
 
   config = with scfg; lib.mkIf (cfg.enable && elem "paste" cfg.services) {
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "paste.sr.ht user"; }
-      ];
+          description = "paste.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.postgresql = {
@@ -95,7 +92,7 @@ in {
             Restart = "always";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker --loglevel=info";
+          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n pastesrht@%%h --loglevel=info";
         };
       };
     };

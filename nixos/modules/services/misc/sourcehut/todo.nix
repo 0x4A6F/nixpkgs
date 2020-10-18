@@ -46,15 +46,12 @@ in {
 
   config = with scfg; lib.mkIf (cfg.enable && elem "todo" cfg.services) {
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "todo.sr.ht user"; }
-      ];
+          description = "todo.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.postgresql = {
@@ -96,7 +93,7 @@ in {
             Restart = "always";
           };
 
-          script = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker --loglevel=info";
+          script = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n todosrht@%%h --loglevel=info";
         };
       };
     };
