@@ -28,9 +28,9 @@ import ./make-test-python.nix (
             "sr.ht".owner-name = "Jane Doe";
             "sr.ht".owner-email = "";
             # nix-shell -p pwgen --run 'pwgen 32'
-            "sr.ht".secret-key = "";
+            "sr.ht".secret-key = "eepaicophefaheolaepie1feeShoo0sa";
             # nix-shell -p sourcehut.metasrht --run 'srht-webhook-keygen'
-            webhooks.private-key = "";
+            webhooks.private-key = "eepaicophefaheolaepie1feeShoo0sa333333333333";
 
             "git.sr.ht".origin = "";
             "hg.sr.ht".origin = "";
@@ -65,6 +65,9 @@ import ./make-test-python.nix (
 
             "meta.sr.ht::settings".user-invites = 0;
             "meta.sr.ht::settings".onboarding-redirect = "";
+
+            # Patchset preparation
+            "git.sr.ht".outgoing-domain = "example.local";
           };
         };
       };
