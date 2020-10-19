@@ -30,7 +30,7 @@ import ./make-test-python.nix (
             # nix-shell -p pwgen --run 'pwgen 32'
             "sr.ht".secret-key = "eepaicophefaheolaepie1feeShoo0sa";
             # nix-shell -p sourcehut.metasrht --run 'srht-webhook-keygen'
-            webhooks.private-key = "eepaicophefaheolaepie1feeShoo0sa333333333333";
+            webhooks.private-key = "eepaicophefaheolaepie1feeShoo0sa2";
 
             "git.sr.ht".origin = "";
             "hg.sr.ht".origin = "";
