@@ -7,7 +7,6 @@ import ./make-test-python.nix (
       meta.maintainers = with lib.maintainers; [ _0x4A6F ];
 
       nodes = {
-        sourcehut_client = {};
         sourcehut_server = {
           networking.firewall.allowedTCPPorts = [ 80 443 ];
 
@@ -19,18 +18,50 @@ import ./make-test-python.nix (
             recommendedProxySettings = true;
           };
 
+          services.postgresql = {
+             enable = true;
+             ensureDatabases = [ "sourcehut" ];
+             ensureUsers = [
+               { name = "sourcehut";
+                 ensurePermissions."DATABASE sourcehut" = "ALL PRIVILEGES";
+               }
+             ];
+           };
+
           services.sourcehut.enable = true;
           services.sourcehut.settings = {
+            # The name of your network of sr.ht-based sites
             "sr.ht".site-name = "sourcehut";
+
+            # The top-level info page for your site
             "sr.ht".site-info = "sourcehut_server";
+
+            # {{ site-name }}, {{ site-blurb }}
             "sr.ht".site-blurb = "\"the hacker's forge\"";
+
+            # If this != production, we add a banner to each page
             "sr.ht".environment = "testing";
+
+            # Contact information for the site owners
             "sr.ht".owner-name = "Jane Doe";
-            "sr.ht".owner-email = "";
+            "sr.ht".owner-email = "mail@example.org";
+
+            # The source code for your fork of sr.ht
+            "sr.ht".source-url = "https://git.sr.ht/~sircmpwn/srht";
+
+            # A secret key to encrypt session cookies with
             # nix-shell -p pwgen --run 'pwgen 32'
             "sr.ht".secret-key = "eepaicophefaheolaepie1feeShoo0sa";
+
+            # base64-encoded Ed25519 key for signing webhook payloads. This should be
+            # consistent for all *.sr.ht sites, as we'll use this key to verify signatures
+            # from other sites in your network.
+            #
+            # Use the srht-webhook-keygen command to generate a key.
             # nix-shell -p sourcehut.metasrht --run 'srht-webhook-keygen'
-            webhooks.private-key = "eepaicophefaheolaepie1feeShoo0sa2";
+            # Private key: rBSCsdozjxm257U5ib0ZZr6wvrLUVk6gUjgyR/USrEg=
+            # Public key: o7AGAi/66bhc5usAe20uu24Ffi052DplRanIB+rI3Zo=
+            webhooks.private-key = "rBSCsdozjxm257U5ib0ZZr6wvrLUVk6gUjgyR/USrEg=";
 
             "git.sr.ht".origin = "";
             "hg.sr.ht".origin = "";
@@ -67,7 +98,7 @@ import ./make-test-python.nix (
             "meta.sr.ht::settings".onboarding-redirect = "";
 
             # Patchset preparation
-            "git.sr.ht".outgoing-domain = "example.local";
+            "git.sr.ht".outgoing-domain = "example.org";
           };
         };
       };
