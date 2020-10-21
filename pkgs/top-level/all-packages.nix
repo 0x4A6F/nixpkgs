@@ -14412,6 +14412,8 @@ in
 
   lightning = callPackage ../development/libraries/lightning { };
 
+  lighthouse-rs = callPackage ../applications/blockchains/lighthouse { };
+
   lightlocker = callPackage ../misc/screensavers/light-locker { };
 
   lightspark = callPackage ../misc/lightspark { };
