@@ -5,21 +5,21 @@
 , pkg-config
 , openssl
 , postgresql
-#, espeak
+, espeak
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "lemmy";
-  version = "0.8.0";
+  version = "0.8.4";
 
   src = fetchFromGitHub {
     owner = "LemmyNet";
     repo = pname;
     rev = "v${version}";
-    sha256 = "00n4lmm9b92rhcday9dy8r42dwww3s2x7wx0zyk55vh8szzxhxag";
+    sha256 = "sha256-Kz9cmTzLJ/QOizyphnckPSTSpfV5ANfDp1XsqoefTlE=";
   };
 
-  cargoSha256 = "sha256:1vk3fmm9i1icarpb93f1xb611wj1i29ky3s8afmk18n97b6h4xi5";
+  cargoSha256 = "12hhzhh3z8ib5jdkr1nggwdmg6a32fbxiarp5vfxl84fg2jcb929";
 
   nativeBuildInputs = [
     cmake
@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage rec {
 
   buildInputs = [
     openssl
-#    espeak
+    espeak
     postgresql
   ];
 
