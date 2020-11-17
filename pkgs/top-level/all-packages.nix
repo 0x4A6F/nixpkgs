@@ -22054,6 +22054,8 @@ julia_15 = callPackage ../development/compilers/julia/1.5.nix {
 
   lci = callPackage ../applications/science/logic/lci {};
 
+  lemmy = callPackage ../servers/lemmy { };
+
   lemonbar = callPackage ../applications/window-managers/lemonbar { };
 
   lemonbar-xft = callPackage ../applications/window-managers/lemonbar/xft.nix { };
