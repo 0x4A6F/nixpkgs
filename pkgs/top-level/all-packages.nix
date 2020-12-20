@@ -11161,6 +11161,8 @@ in
 
   bpftool = callPackage ../os-specific/linux/bpftool { };
 
+  bpf-linker = callPackage ../os-specific/linux/bpf-linker { };
+
   bpm-tools = callPackage ../tools/audio/bpm-tools { };
 
   byacc = callPackage ../development/tools/parsing/byacc { };
