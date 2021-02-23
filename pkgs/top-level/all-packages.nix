@@ -4241,6 +4241,8 @@ in
 
   flashrom = callPackage ../tools/misc/flashrom { };
 
+  pinecil-firmware-updater = libsForQt5.callPackage ../tools/misc/pinecil-firmware-updater { };
+
   flent = python3Packages.callPackage ../applications/networking/flent { };
 
   flpsed = callPackage ../applications/editors/flpsed { };

@@ -1,0 +1,13 @@
+diff --git a/flashingthread.cpp b/flashingthread.cpp
+index ca92562..7315e5d 100644
+--- a/flashingthread.cpp
++++ b/flashingthread.cpp
+@@ -55,7 +55,7 @@ void FlashingThread::run()
+ #ifdef _WIN32
+     dfuUtil.start("dfu-util.exe", dfuUtilArgs);
+ #else
+-    dfuUtil.start(QCoreApplication::applicationDirPath() + "/dfu-util", dfuUtilArgs);
++    dfuUtil.start("REPLACE-dfu-util", dfuUtilArgs);
+ #endif
+     if (!dfuUtil.waitForFinished(60 * 5 * 1000)) {
+         emit consoleErrorData(QString("Launching dfu-util failed! Reason: %1").arg(dfuUtil.errorString()));

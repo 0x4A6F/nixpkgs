@@ -1,0 +1,12 @@
+diff --git a/pinecil_firmware_updater.pro b/pinecil_firmware_updater.pro
+index c51ca87..1fef38a 100644
+--- a/pinecil_firmware_updater.pro
++++ b/pinecil_firmware_updater.pro
+@@ -34,6 +34,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
+ else: unix:!android: target.path = /opt/$${TARGET}/bin
+ !isEmpty(target.path): INSTALLS += target
+ 
++unix:!android: LIBS += -lusb-1.0
+ win32: LIBS += -L$$PWD/deps/libusb/VS2019/MS64/dll/ -llibusb-1.0
+ win32: INCLUDEPATH += $$PWD/deps/libusb/include
+ win32: DEPENDPATH += $$PWD/deps/libusb/include
