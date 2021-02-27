@@ -125,10 +125,13 @@ in
       serviceConfig = {
         User = "routinator";
         Group = "routinator";
-        WorkingDirectory = "/var/lib/routinator";
+        WorkingDirectory = "routinator";
       #  DynamicUser = "yes";
-      #  RuntimeDirectory = "routinator";
-      #  StateDirectory = "routinator";
+        RuntimeDirectory = "routinator";
+        StateDirectory = "routinator";
+        CacheDirectory = "routinator";
+        LogsDirectory = "routinator";
+        ConfigurationDirectory = "routinator";
       #  StateDirectoryMode = "0700";
       #  PrivateDevices = true;
       #  # Sandboxing
