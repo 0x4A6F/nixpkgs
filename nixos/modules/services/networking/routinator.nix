@@ -104,10 +104,17 @@ in
       partOf = [ "routinator.service" ];
       before = [ "routinator.service" ];
       serviceConfig = {
+        Type = "oneshot";
         User = "routinator";
         Group = "routinator";
         WorkingDirectory = "/var/lib/routinator";
-        Type = "oneshot";
+      # DynamicUser = "yes";
+        RuntimeDirectory = "routinator";
+        RuntimeDirectoryPreserve = "yes";
+        StateDirectory = "routinator";
+        CacheDirectory = "routinator";
+        LogsDirectory = "routinator";
+        ConfigurationDirectory = "routinator";
       };
       script = ''
         mkdir -p /var/lib/routinator
@@ -126,8 +133,9 @@ in
         User = "routinator";
         Group = "routinator";
         WorkingDirectory = "routinator";
-      #  DynamicUser = "yes";
+      # DynamicUser = "yes";
         RuntimeDirectory = "routinator";
+        RuntimeDirectoryPreserve = "yes";
         StateDirectory = "routinator";
         CacheDirectory = "routinator";
         LogsDirectory = "routinator";
