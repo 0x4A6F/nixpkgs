@@ -194,9 +194,12 @@ in
   config = mkIf cfg.enable {
 
     assertions = [
-      { assertion = !config.services.zabbixServer.enable;
-        message = "Please choose one of services.zabbixServer or services.zabbixProxy.";
+      { assertion = config.services.zabbixServer.database.name != config.services.zabbixProxy.database.name;
+        message = "Please choose another database name (i.e. set services.zabbixProxy.database.name to zabbix_proxy) if connecting services.zabbixServer and services.zabbixProxy to the same database";
       }
+      #{ assertion = config.services.zabbixServer.listen.port != config.services.zabbixProxy.listen.port;
+      #  message = "Please choose another listening port (i.e. set services.zabbixServer.listen.port and services.zabbixWeb.server.port to 10050)";
+      #}
       { assertion = cfg.database.createLocally -> cfg.database.user == user;
         message = "services.zabbixProxy.database.user must be set to ${user} if services.zabbixProxy.database.createLocally is set true";
       }
