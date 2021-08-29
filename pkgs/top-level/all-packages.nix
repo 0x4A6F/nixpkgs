@@ -1843,6 +1843,8 @@ with pkgs;
 
   autorandr = callPackage ../tools/misc/autorandr {};
 
+  autorandr-rs = callPackage ../tools/misc/autorandr-rs {};
+
   avahi = callPackage ../development/libraries/avahi (config.avahi or {});
 
   avahi-compat = callPackage ../development/libraries/avahi ((config.avahi or {}) // {
