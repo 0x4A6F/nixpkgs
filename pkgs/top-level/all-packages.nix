@@ -6600,6 +6600,12 @@ with pkgs;
 
   lhasa = callPackage ../tools/compression/lhasa {};
 
+  libcdata = callPackage ../development/libraries/libcdata { };
+
+  libcerror = callPackage ../development/libraries/libcerror { };
+
+  libcthreads = callPackage ../development/libraries/libcthreads { };
+
   libcpuid = callPackage ../tools/misc/libcpuid { };
 
   libcsptr = callPackage ../development/libraries/libcsptr { };
