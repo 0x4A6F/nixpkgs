@@ -1,10 +1,15 @@
-{ stdenv, fetchurl, lib, cmake, cacert, fetchpatch
+{ stdenv
+, fetchurl
+, lib
+, cmake
+, cacert
+, fetchpatch
 , buildShared ? !stdenv.hostPlatform.isStatic
 }:
 
 let
 
-  generic = { version, sha256, patches ? [] }: stdenv.mkDerivation rec {
+  generic = { version, sha256, patches ? [ ] }: stdenv.mkDerivation rec {
     pname = "libressl";
     inherit version;
 
@@ -55,14 +60,15 @@ let
 
     meta = with lib; {
       description = "Free TLS/SSL implementation";
-      homepage    = "https://www.libressl.org";
+      homepage = "https://www.libressl.org";
       license = with licenses; [ publicDomain bsdOriginal bsd0 bsd3 gpl3 isc openssl ];
-      platforms   = platforms.all;
+      platforms = platforms.all;
       maintainers = with maintainers; [ thoughtpolice fpletz ];
     };
   };
 
-in {
+in
+{
   libressl_3_2 = generic {
     version = "3.2.5";
     sha256 = "1zkwrs3b19s1ybz4q9hrb7pqsbsi8vxcs44qanfy11fkc7ynb2kr";

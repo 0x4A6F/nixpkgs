@@ -1,17 +1,29 @@
-{ lib, stdenv, fetchFromGitLab, cmake, gfortran, perl
-, openblas, hdf5-cpp, python3, texlive
-, armadillo, mpi, globalarrays, openssh
+{ lib
+, stdenv
+, fetchFromGitLab
+, cmake
+, gfortran
+, perl
+, openblas
+, hdf5-cpp
+, python3
+, texlive
+, armadillo
+, mpi
+, globalarrays
+, openssh
 , makeWrapper
-} :
+}:
 
 let
   version = "21.06";
   # The tag keeps moving, fix a hash instead
   gitLabRev = "dd982ad4bc94dec8ac1e3e99cb6a7dd249ff71de";
 
-  python = python3.withPackages (ps : with ps; [ six pyparsing ]);
+  python = python3.withPackages (ps: with ps; [ six pyparsing ]);
 
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "openmolcas";
   inherit version;
 
@@ -56,7 +68,7 @@ in stdenv.mkDerivation {
     "-DOPENBLASROOT=${openblas.dev}"
   ];
 
-  GAROOT=globalarrays;
+  GAROOT = globalarrays;
 
   postConfigure = ''
     # The Makefile will install pymolcas during the build grrr.

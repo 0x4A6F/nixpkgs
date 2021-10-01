@@ -5,7 +5,8 @@ with lib;
 let
   cfg = config.services.crossfire-server;
   serverPort = 13327;
-in {
+in
+{
   options.services.crossfire-server = {
     enable = mkOption {
       type = types.bool;
@@ -97,19 +98,19 @@ in {
           real_wiz false
         ''';
       '';
-      default = {};
+      default = { };
     };
   };
 
   config = mkIf cfg.enable {
     users.users.crossfire = {
-      description     = "Crossfire server daemon user";
-      home            = cfg.stateDir;
-      createHome      = false;
-      isSystemUser    = true;
-      group           = "crossfire";
+      description = "Crossfire server daemon user";
+      home = cfg.stateDir;
+      createHome = false;
+      isSystemUser = true;
+      group = "crossfire";
     };
-    users.groups.crossfire = {};
+    users.groups.crossfire = { };
 
     # Merge the cfg.configFiles setting with the default files shipped with
     # Crossfire.
@@ -120,10 +121,11 @@ in {
       (name: value: lib.attrsets.nameValuePair "crossfire/${name}" {
         mode = "0644";
         text =
-          (optionalString (!elem name ["motd" "news" "rules"])
+          (optionalString (!elem name [ "motd" "news" "rules" ])
             (fileContents "${cfg.package}/etc/crossfire/${name}"))
           + "\n${value}";
-      }) ({
+      })
+      ({
         ban_file = "";
         dm_file = "";
         exp_table = "";
@@ -137,9 +139,9 @@ in {
       } // cfg.configFiles);
 
     systemd.services.crossfire-server = {
-      description   = "Crossfire Server Daemon";
-      wantedBy      = [ "multi-user.target" ];
-      after         = [ "network.target" ];
+      description = "Crossfire Server Daemon";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
       serviceConfig = mkMerge [
         {

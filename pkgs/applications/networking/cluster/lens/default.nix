@@ -9,14 +9,15 @@ let
   src = fetchurl {
     url = "https://api.k8slens.dev/binaries/Lens-${build}.x86_64.AppImage";
     sha256 = "1iwwyqpn1x1m8n22f99snlhcbcr65i4przx697hlbpmnm40dw7q9";
-    name="${pname}.AppImage";
+    name = "${pname}.AppImage";
   };
 
   appimageContents = appimageTools.extractType2 {
     inherit name src;
   };
 
-in appimageTools.wrapType2 {
+in
+appimageTools.wrapType2 {
   inherit name src;
 
   extraInstallCommands =

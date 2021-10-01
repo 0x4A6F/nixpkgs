@@ -16,16 +16,18 @@ let
 
       inherit subPackages postInstall;
 
-  vendorSha256 = "sha256-fStGEKAR9fzA6Uom6r59jFGTBUfTTj0TzytoJWuicbU=";
+      vendorSha256 = "sha256-fStGEKAR9fzA6Uom6r59jFGTBUfTTj0TzytoJWuicbU=";
 
-  doCheck = false;
+      doCheck = false;
 
-      ldflags = let
-        versionPkg = "github.com/sensu/sensu-go/version";
-      in [
-        "-X ${versionPkg}.Version=${version}"
-        "-X ${versionPkg}.BuildSHA=${shortRev}"
-      ];
+      ldflags =
+        let
+          versionPkg = "github.com/sensu/sensu-go/version";
+        in
+        [
+          "-X ${versionPkg}.Version=${version}"
+          "-X ${versionPkg}.BuildSHA=${shortRev}"
+        ];
 
       meta = {
         homepage = "https://sensu.io";

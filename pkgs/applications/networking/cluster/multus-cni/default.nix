@@ -11,15 +11,20 @@ buildGoModule rec {
     sha256 = "sha256-wG6SRts3+bmeMkfScyNorsBvRl/hxe+CUnL0rwfknpc=";
   };
 
-  ldflags = let
-    multus = "gopkg.in/intel/multus-cni.v3/pkg/multus";
-    commit = "f6298a3a294a79f9fbda0b8f175e521799d5f8d7";
-  in [
-    "-s" "-w" "-X ${multus}.version=v${version}" "-X ${multus}.commit=${commit}"
-  ];
+  ldflags =
+    let
+      multus = "gopkg.in/intel/multus-cni.v3/pkg/multus";
+      commit = "f6298a3a294a79f9fbda0b8f175e521799d5f8d7";
+    in
+    [
+      "-s"
+      "-w"
+      "-X ${multus}.version=v${version}"
+      "-X ${multus}.commit=${commit}"
+    ];
 
   preInstall = ''
-      mv $GOPATH/bin/cmd $GOPATH/bin/multus
+    mv $GOPATH/bin/cmd $GOPATH/bin/multus
   '';
 
   vendorSha256 = null;

@@ -1,6 +1,16 @@
-{ lib, stdenv, buildPythonPackage, fetchFromGitHub, fetchpatch, pythonOlder
-, pandas, shapely, fiona, pyproj
-, pytestCheckHook, Rtree }:
+{ lib
+, stdenv
+, buildPythonPackage
+, fetchFromGitHub
+, fetchpatch
+, pythonOlder
+, pandas
+, shapely
+, fiona
+, pyproj
+, pytestCheckHook
+, Rtree
+}:
 
 buildPythonPackage rec {
   pname = "geopandas";

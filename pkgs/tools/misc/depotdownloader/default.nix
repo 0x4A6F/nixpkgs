@@ -1,9 +1,15 @@
-{ stdenv, lib, fetchFromGitHub, fetchurl, linkFarmFromDrvs, makeWrapper
-,  dotnet-sdk_5, dotnetPackages
+{ stdenv
+, lib
+, fetchFromGitHub
+, fetchurl
+, linkFarmFromDrvs
+, makeWrapper
+, dotnet-sdk_5
+, dotnetPackages
 }:
 
 let
-  fetchNuGet = {name, version, sha256}: fetchurl {
+  fetchNuGet = { name, version, sha256 }: fetchurl {
     name = "nuget-${name}-${version}.nupkg";
     url = "https://www.nuget.org/api/v2/package/${name}/${version}";
     inherit sha256;

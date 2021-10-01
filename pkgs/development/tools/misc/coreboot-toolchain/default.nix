@@ -1,18 +1,28 @@
-{ lib, stdenvNoCC, fetchurl, fetchgit,
-  gnumake, patch, zlib, git, bison,
-  flex, gnat11, curl, perl
+{ lib
+, stdenvNoCC
+, fetchurl
+, fetchgit
+, gnumake
+, patch
+, zlib
+, git
+, bison
+, flex
+, gnat11
+, curl
+, perl
 }:
 
 let
-  version_coreboot      = "4.14";
+  version_coreboot = "4.14";
 
-  version_gmp           = "6.2.0";
-  version_mpfr          = "4.1.0";
-  version_mpc           = "1.2.0";
-  version_gcc           = "8.3.0";
-  version_binutils      = "2.35.1";
-  version_acpica        = "20200925";
-  version_nasm          = "2.15.05";
+  version_gmp = "6.2.0";
+  version_mpfr = "4.1.0";
+  version_mpc = "1.2.0";
+  version_gcc = "8.3.0";
+  version_binutils = "2.35.1";
+  version_acpica = "20200925";
+  version_nasm = "2.15.05";
 
   tar_name_gmp = "gmp-${version_gmp}.tar.xz";
   tar_gmp = fetchurl {
@@ -61,7 +71,8 @@ let
     url = "https://coreboot.org/releases/${tar_coreboot_name}";
     sha256 = "0viw2x4ckjwiylb92w85k06b0g9pmamjy2yqs7fxfqbmfadkf1yr";
   };
-in stdenvNoCC.mkDerivation rec {
+in
+stdenvNoCC.mkDerivation rec {
   name = "coreboot-toolchain";
   version = version_coreboot;
   src = tar_coreboot;

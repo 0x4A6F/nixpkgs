@@ -1,13 +1,13 @@
 { lib, stdenv, fetchurl, unzip, cmake }:
 let
   s = # Generated upstream information
-  rec {
-    baseName="angelscript";
-    version = "2.35.0";
-    name="${baseName}-${version}";
-    url="http://www.angelcode.com/angelscript/sdk/files/angelscript_${version}.zip";
-    sha256 = "sha256-AQ3UXiPnNNRvWJHXDiaGB6EsuasSUD3aQvhC2dt+iFc=";
-  };
+    rec {
+      baseName = "angelscript";
+      version = "2.35.0";
+      name = "${baseName}-${version}";
+      url = "http://www.angelcode.com/angelscript/sdk/files/angelscript_${version}.zip";
+      sha256 = "sha256-AQ3UXiPnNNRvWJHXDiaGB6EsuasSUD3aQvhC2dt+iFc=";
+    };
 
 in
 stdenv.mkDerivation {

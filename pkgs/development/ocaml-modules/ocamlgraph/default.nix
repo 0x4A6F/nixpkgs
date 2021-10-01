@@ -17,10 +17,10 @@ buildDunePackage rec {
   ];
 
   meta = with lib; {
-      homepage = "http://ocamlgraph.lri.fr/";
-      downloadPage = "https://github.com/backtracking/ocamlgraph";
-      description = "Graph library for OCaml";
-      license = licenses.gpl2Oss;
-      maintainers = with maintainers; [ kkallio superherointj ];
+    homepage = "http://ocamlgraph.lri.fr/";
+    downloadPage = "https://github.com/backtracking/ocamlgraph";
+    description = "Graph library for OCaml";
+    license = licenses.gpl2Oss;
+    maintainers = with maintainers; [ kkallio superherointj ];
   };
 }

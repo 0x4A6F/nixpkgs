@@ -32,11 +32,13 @@ buildPythonPackage {
   ];
 
   # Override existing logic for locating libxgboost.so which is not appropriate for Nix
-  prePatch = let
-    libPath = "${xgboost}/lib/libxgboost${stdenv.hostPlatform.extensions.sharedLibrary}";
-  in ''
-    echo 'find_lib_path = lambda: ["${libPath}"]' > python-package/xgboost/libpath.py
-  '';
+  prePatch =
+    let
+      libPath = "${xgboost}/lib/libxgboost${stdenv.hostPlatform.extensions.sharedLibrary}";
+    in
+    ''
+      echo 'find_lib_path = lambda: ["${libPath}"]' > python-package/xgboost/libpath.py
+    '';
 
   dontUseCmakeConfigure = true;
 
@@ -49,7 +51,7 @@ buildPythonPackage {
     ln -s ${xgboost}/bin/xgboost ../xgboost
   '';
 
-  pytestFlagsArray = ["../tests/python"];
+  pytestFlagsArray = [ "../tests/python" ];
   disabledTestPaths = [
     # Requires internet access: https://github.com/dmlc/xgboost/blob/03cd087da180b7dff21bd8ef34997bf747016025/tests/python/test_ranking.py#L81
     "../tests/python/test_ranking.py"

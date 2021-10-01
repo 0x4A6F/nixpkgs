@@ -45,15 +45,15 @@ rustPlatform.buildRustPackage rec {
       # The externals for skia are taken from skia/DEPS
       externals = lib.mapAttrs (n: v: fetchgit v) (lib.importJSON ./skia-externals.json);
     in
-      runCommand "source" {} (
-        ''
-          cp -R ${repo} $out
-          chmod -R +w $out
+    runCommand "source" { } (
+      ''
+        cp -R ${repo} $out
+        chmod -R +w $out
 
-          mkdir -p $out/third_party/externals
-          cd $out/third_party/externals
-        '' + (builtins.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "cp -ra ${value} ${name}") externals))
-      );
+        mkdir -p $out/third_party/externals
+        cd $out/third_party/externals
+      '' + (builtins.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "cp -ra ${value} ${name}") externals))
+    );
 
   SKIA_NINJA_COMMAND = "${ninja}/bin/ninja";
   SKIA_GN_COMMAND = "${gn}/bin/gn";
@@ -97,9 +97,9 @@ rustPlatform.buildRustPackage rec {
   ];
 
   postFixup = ''
-      wrapProgram $out/bin/neovide \
-        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libglvnd libxkbcommon wayland xorg.libXcursor xorg.libXext xorg.libXrandr xorg.libXi ]}
-    '';
+    wrapProgram $out/bin/neovide \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libglvnd libxkbcommon wayland xorg.libXcursor xorg.libXext xorg.libXrandr xorg.libXi ]}
+  '';
 
   postInstall = ''
     for n in 16x16 32x32 48x48 256x256; do

@@ -39,7 +39,7 @@ in
 
 stdenv.mkDerivation rec {
   inherit pname;
-  version  = "4.1.3";
+  version = "4.1.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/${pname}/releases/${version}/${pname}_src.tar.xz";

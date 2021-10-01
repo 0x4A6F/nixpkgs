@@ -9,7 +9,8 @@
 
 let
   node-api-lib = (if stdenv.isDarwin then "libquery_engine.dylib" else "libquery_engine.so");
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "prisma-engines";
   version = "3.1.1";
 

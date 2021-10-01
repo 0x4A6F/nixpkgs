@@ -147,7 +147,7 @@ let
     });
 
     insect = super.insect.override (drv: {
-      nativeBuildInputs = drv.nativeBuildInputs or [] ++ [ pkgs.psc-package self.pulp ];
+      nativeBuildInputs = drv.nativeBuildInputs or [ ] ++ [ pkgs.psc-package self.pulp ];
     });
 
     jsonplaceholder = super.jsonplaceholder.override (drv: {
@@ -163,7 +163,7 @@ let
       '';
     });
 
-    makam =  super.makam.override {
+    makam = super.makam.override {
       buildInputs = [ pkgs.nodejs pkgs.makeWrapper ];
       postFixup = ''
         wrapProgram "$out/bin/makam" --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.nodejs ]}
@@ -231,18 +231,19 @@ let
     };
 
     mermaid-cli = super."@mermaid-js/mermaid-cli".override (
-    if stdenv.isDarwin
-    then {}
-    else {
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      prePatch = ''
-        export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-      '';
-      postInstall = ''
-        wrapProgram $out/bin/mmdc \
-        --set PUPPETEER_EXECUTABLE_PATH ${pkgs.chromium.outPath}/bin/chromium
-      '';
-    });
+      if stdenv.isDarwin
+      then { }
+      else {
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        prePatch = ''
+          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
+        '';
+        postInstall = ''
+          wrapProgram $out/bin/mmdc \
+          --set PUPPETEER_EXECUTABLE_PATH ${pkgs.chromium.outPath}/bin/chromium
+        '';
+      }
+    );
 
     pnpm = super.pnpm.override {
       nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -251,16 +252,18 @@ let
         sed 's/"link:/"file:/g' --in-place package.json
       '';
 
-      postInstall = let
-        pnpmLibPath = pkgs.lib.makeBinPath [
-          nodejs.passthru.python
-          nodejs
-        ];
-      in ''
-        for prog in $out/bin/*; do
-          wrapProgram "$prog" --prefix PATH : ${pnpmLibPath}
-        done
-      '';
+      postInstall =
+        let
+          pnpmLibPath = pkgs.lib.makeBinPath [
+            nodejs.passthru.python
+            nodejs
+          ];
+        in
+        ''
+          for prog in $out/bin/*; do
+            wrapProgram "$prog" --prefix PATH : ${pnpmLibPath}
+          done
+        '';
     };
 
     postcss-cli = super.postcss-cli.override {
@@ -311,7 +314,7 @@ let
       npmFlags = "--ignore-scripts";
 
       nativeBuildInputs = [ pkgs.makeWrapper ];
-      postInstall =  ''
+      postInstall = ''
         wrapProgram "$out/bin/pulp" --suffix PATH : ${pkgs.lib.makeBinPath [
           pkgs.purescript
         ]}
@@ -387,18 +390,18 @@ let
     };
 
     vega-lite = super.vega-lite.override {
-        # npx tries to install vega from scratch at vegalite runtime if it
-        # can't find it. We thus replace it with a direct call to the nix
-        # derivation. This might not be necessary anymore in future vl
-        # versions: https://github.com/vega/vega-lite/issues/6863.
-        postInstall = ''
-          substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2pdf \
-            --replace "npx -p vega vg2pdf"  "${self.vega-cli}/bin/vg2pdf"
-          substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2svg \
-            --replace "npx -p vega vg2svg"  "${self.vega-cli}/bin/vg2svg"
-          substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2png \
-            --replace "npx -p vega vg2png"  "${self.vega-cli}/bin/vg2png"
-        '';
+      # npx tries to install vega from scratch at vegalite runtime if it
+      # can't find it. We thus replace it with a direct call to the nix
+      # derivation. This might not be necessary anymore in future vl
+      # versions: https://github.com/vega/vega-lite/issues/6863.
+      postInstall = ''
+        substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2pdf \
+          --replace "npx -p vega vg2pdf"  "${self.vega-cli}/bin/vg2pdf"
+        substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2svg \
+          --replace "npx -p vega vg2svg"  "${self.vega-cli}/bin/vg2svg"
+        substituteInPlace $out/lib/node_modules/vega-lite/bin/vl2png \
+          --replace "npx -p vega vg2png"  "${self.vega-cli}/bin/vg2png"
+      '';
     };
 
     webtorrent-cli = super.webtorrent-cli.override {
@@ -447,4 +450,5 @@ let
       ];
     };
   };
-in self
+in
+self

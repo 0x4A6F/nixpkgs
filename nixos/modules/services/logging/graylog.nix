@@ -133,7 +133,7 @@ in
         description = "Graylog server daemon user";
       };
     };
-    users.groups = mkIf (cfg.user == "graylog") {};
+    users.groups = mkIf (cfg.user == "graylog") { };
 
     systemd.tmpfiles.rules = [
       "d '${cfg.messageJournalDir}' - ${cfg.user} - - -"
@@ -161,7 +161,7 @@ in
         done
       '';
       serviceConfig = {
-        User="${cfg.user}";
+        User = "${cfg.user}";
         StateDirectory = "graylog";
         ExecStart = "${cfg.package}/bin/graylogctl run";
       };

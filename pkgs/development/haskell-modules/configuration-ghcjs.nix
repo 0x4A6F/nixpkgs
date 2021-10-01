@@ -27,7 +27,7 @@ self: super:
   stm = doJailbreak self.stm_2_5_0_1;
   exceptions = dontCheck self.exceptions_0_10_4;
 
-## OTHER PACKAGES
+  ## OTHER PACKAGES
 
   # Runtime exception in tests, missing C API h$realloc
   base-compat-batteries = dontCheck super.base-compat-batteries;
@@ -40,13 +40,16 @@ self: super:
 
   ghcjs-dom = overrideCabal super.ghcjs-dom (drv: {
     libraryHaskellDepends = with self; [
-      ghcjs-base ghcjs-dom-jsffi text transformers
+      ghcjs-base
+      ghcjs-dom-jsffi
+      text
+      transformers
     ];
     configureFlags = [ "-fjsffi" "-f-webkit" ];
   });
 
   ghcjs-dom-jsffi = overrideCabal super.ghcjs-dom-jsffi (drv: {
-    libraryHaskellDepends = (drv.libraryHaskellDepends or []) ++ [ self.ghcjs-base self.text ];
+    libraryHaskellDepends = (drv.libraryHaskellDepends or [ ]) ++ [ self.ghcjs-base self.text ];
     broken = false;
   });
 
@@ -60,7 +63,7 @@ self: super:
   http-types = dontCheck super.http-types;
 
   jsaddle = overrideCabal super.jsaddle (drv: {
-    libraryHaskellDepends = (drv.libraryHaskellDepends or []) ++ [ self.ghcjs-base ];
+    libraryHaskellDepends = (drv.libraryHaskellDepends or [ ]) ++ [ self.ghcjs-base ];
   });
 
   # Tests hang, possibly some issue with tasty and race(async) usage in the nonTerminating tests
@@ -75,11 +78,11 @@ self: super:
   QuickCheck = dontCheck super.QuickCheck;
 
   reflex = overrideCabal super.reflex (drv: {
-    libraryHaskellDepends = (drv.libraryHaskellDepends or []) ++ [ self.ghcjs-base ];
+    libraryHaskellDepends = (drv.libraryHaskellDepends or [ ]) ++ [ self.ghcjs-base ];
   });
 
   reflex-dom = overrideCabal super.reflex-dom (drv: {
-    libraryHaskellDepends = removeLibraryHaskellDepends ["jsaddle-webkit2gtk"] (drv.libraryHaskellDepends or []);
+    libraryHaskellDepends = removeLibraryHaskellDepends [ "jsaddle-webkit2gtk" ] (drv.libraryHaskellDepends or [ ]);
   });
 
   # https://github.com/dreixel/syb/issues/21
@@ -102,7 +105,7 @@ self: super:
   th-abstraction = dontCheck super.th-abstraction;
 
   # https://github.com/haskell/vector/issues/410
-  vector = appendPatch super.vector (../compilers/ghcjs/patches/vector-ghcjs-storable-set.patch) ;
+  vector = appendPatch super.vector (../compilers/ghcjs/patches/vector-ghcjs-storable-set.patch);
 
   # Need hedgehog for tests, which fails to compile due to dep on concurrent-output
   zenc = dontCheck super.zenc;

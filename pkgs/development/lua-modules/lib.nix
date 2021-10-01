@@ -1,8 +1,9 @@
 { pkgs, lib, lua }:
 let
   requiredLuaModules = drvs: with lib; let
-    modules =  filter hasLuaModule drvs;
-  in unique ([lua] ++ modules ++ concatLists (catAttrs "requiredLuaModules" modules));
+    modules = filter hasLuaModule drvs;
+  in
+  unique ([ lua ] ++ modules ++ concatLists (catAttrs "requiredLuaModules" modules));
   # Check whether a derivation provides a lua module.
   hasLuaModule = drv: drv ? luaModule;
 in
@@ -40,9 +41,9 @@ rec {
   isLuaJIT = lib.getName lua == "luajit";
 
   /* generates the relative path towards the folder where
-   seems stable even when using  lua_modules_path = ""
+    seems stable even when using  lua_modules_path = ""
 
-   Example:
+    Example:
     getDataFolder luaPackages.stdlib
     => stdlib-41.2.2-1-rocks/stdlib/41.2.2-1/doc
   */
@@ -53,9 +54,9 @@ rec {
     so that luaRequireModules can be run later
   */
   toLuaModule = drv:
-    drv.overrideAttrs( oldAttrs: {
+    drv.overrideAttrs (oldAttrs: {
       # Use passthru in order to prevent rebuilds when possible.
-      passthru = (oldAttrs.passthru or {}) // {
+      passthru = (oldAttrs.passthru or { }) // {
         luaModule = lua;
         requiredLuaModules = requiredLuaModules drv.propagatedBuildInputs;
       };
@@ -63,17 +64,18 @@ rec {
 
   /* generate luarocks config
 
-  generateLuarocksConfig {
+    generateLuarocksConfig {
     externalDeps = [ { name = "CRYPTO"; dep = pkgs.openssl; } ];
     rocksSubdir = "subdir";
-  };
+    };
   */
-  generateLuarocksConfig = {
-    externalDeps
+  generateLuarocksConfig =
+    { externalDeps
     , requiredLuaRocks
-    , extraVariables ? {}
+    , extraVariables ? { }
     , rocksSubdir
-    }: let
+    }:
+    let
       rocksTrees = lib.imap0
         (i: dep: "{ name = [[dep-${toString i}]], root = '${dep}', rocks_dir = '${dep}/${dep.rocksSubdir}' }")
         requiredLuaRocks;
@@ -81,11 +83,13 @@ rec {
       # Explicitly point luarocks to the relevant locations for multiple-output
       # derivations that are external dependencies, to work around an issue it has
       # (https://github.com/luarocks/luarocks/issues/766)
-      depVariables = lib.concatMap ({name, dep}: [
-        "${name}_INCDIR='${lib.getDev dep}/include';"
-        "${name}_LIBDIR='${lib.getLib dep}/lib';"
-        "${name}_BINDIR='${lib.getBin dep}/bin';"
-      ]) externalDeps';
+      depVariables = lib.concatMap
+        ({ name, dep }: [
+          "${name}_INCDIR='${lib.getDev dep}/include';"
+          "${name}_LIBDIR='${lib.getLib dep}/lib';"
+          "${name}_BINDIR='${lib.getBin dep}/bin';"
+        ])
+        externalDeps';
 
       # example externalDeps': [ { name = "CRYPTO"; dep = pkgs.openssl; } ]
       externalDeps' = lib.filter (dep: !lib.isDerivation dep) externalDeps;
@@ -96,36 +100,37 @@ rec {
 
       extraVariablesStr = lib.concatStringsSep "\n "
         (lib.mapAttrsToList (k: v: "${k}='${v}';") extraVariables);
-  in ''
-    local_cache = ""
-    -- To prevent collisions when creating environments, we install the rock
-    -- files into per-package subdirectories
-    rocks_subdir = '${rocksSubdir}'
-    -- Then we need to tell luarocks where to find the rock files per
-    -- dependency
-    rocks_trees = {
-      ${lib.concatStringsSep "\n, " rocksTrees}
-    }
-  '' + lib.optionalString lua.pkgs.isLuaJIT ''
-    -- Luajit provides some additional functionality built-in; this exposes
-    -- that to luarock's dependency system
-    rocks_provided = {
-      jit='${lua.luaversion}-1';
-      ffi='${lua.luaversion}-1';
-      luaffi='${lua.luaversion}-1';
-      bit='${lua.luaversion}-1';
-    }
-  '' + ''
-    -- For single-output external dependencies
-    external_deps_dirs = {
-      ${lib.concatStringsSep "\n, " externalDepsDirs}
-    }
-    variables = {
-      -- Some needed machinery to handle multiple-output external dependencies,
-      -- as per https://github.com/luarocks/luarocks/issues/766
-      ${lib.optionalString (lib.length depVariables > 0) ''
-        ${lib.concatStringsSep "\n  " depVariables}''}
-      ${extraVariablesStr}
-    }
-  '';
+    in
+    ''
+      local_cache = ""
+      -- To prevent collisions when creating environments, we install the rock
+      -- files into per-package subdirectories
+      rocks_subdir = '${rocksSubdir}'
+      -- Then we need to tell luarocks where to find the rock files per
+      -- dependency
+      rocks_trees = {
+        ${lib.concatStringsSep "\n, " rocksTrees}
+      }
+    '' + lib.optionalString lua.pkgs.isLuaJIT ''
+      -- Luajit provides some additional functionality built-in; this exposes
+      -- that to luarock's dependency system
+      rocks_provided = {
+        jit='${lua.luaversion}-1';
+        ffi='${lua.luaversion}-1';
+        luaffi='${lua.luaversion}-1';
+        bit='${lua.luaversion}-1';
+      }
+    '' + ''
+      -- For single-output external dependencies
+      external_deps_dirs = {
+        ${lib.concatStringsSep "\n, " externalDepsDirs}
+      }
+      variables = {
+        -- Some needed machinery to handle multiple-output external dependencies,
+        -- as per https://github.com/luarocks/luarocks/issues/766
+        ${lib.optionalString (lib.length depVariables > 0) ''
+          ${lib.concatStringsSep "\n  " depVariables}''}
+        ${extraVariablesStr}
+      }
+    '';
 }

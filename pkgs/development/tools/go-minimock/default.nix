@@ -12,7 +12,9 @@ buildGoModule rec {
   };
 
   ldflags = [
-    "-s" "-w" "-X main.version=${version}"
+    "-s"
+    "-w"
+    "-X main.version=${version}"
   ];
 
   vendorSha256 = "sha256-hn222ifKRYbASAHBJyMTCDwhykf2Jg9IqIUlK/GabJA=";

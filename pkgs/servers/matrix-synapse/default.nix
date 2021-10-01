@@ -1,22 +1,26 @@
-{ lib, stdenv, python3, openssl
-, enableSystemd ? stdenv.isLinux, nixosTests
+{ lib
+, stdenv
+, python3
+, openssl
+, enableSystemd ? stdenv.isLinux
+, nixosTests
 , enableRedis ? false
 , callPackage
 }:
 
 let
-py = python3.override {
-  packageOverrides = self: super: {
-    frozendict = super.frozendict.overridePythonAttrs (oldAttrs: rec {
-      version = "1.2";
-      src = oldAttrs.src.override {
-        inherit version;
-        sha256 = "0ibf1wipidz57giy53dh7mh68f2hz38x8f4wdq88mvxj5pr7jhbp";
-      };
-      doCheck = false;
-    });
+  py = python3.override {
+    packageOverrides = self: super: {
+      frozendict = super.frozendict.overridePythonAttrs (oldAttrs: rec {
+        version = "1.2";
+        src = oldAttrs.src.override {
+          inherit version;
+          sha256 = "0ibf1wipidz57giy53dh7mh68f2hz38x8f4wdq88mvxj5pr7jhbp";
+        };
+        doCheck = false;
+      });
+    };
   };
-};
 in
 
 with py.pkgs;
@@ -74,7 +78,7 @@ buildPythonApplication rec {
     typing-extensions
     unpaddedbase64
   ] ++ lib.optional enableSystemd systemd
-    ++ lib.optionals enableRedis [ hiredis txredisapi ];
+  ++ lib.optionals enableRedis [ hiredis txredisapi ];
 
   checkInputs = [ mock parameterized openssl ];
 

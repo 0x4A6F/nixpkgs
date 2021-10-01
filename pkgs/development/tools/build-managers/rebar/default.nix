@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
       work. rebar also provides dependency management, enabling
       application writers to easily re-use common libraries from a
       variety of locations (git, hg, etc).
-      '';
+    '';
 
     platforms = lib.platforms.unix;
     license = lib.licenses.asl20;

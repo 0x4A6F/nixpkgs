@@ -1,5 +1,5 @@
 { luarocks, fetchFromGitHub }:
-luarocks.overrideAttrs(old: {
+luarocks.overrideAttrs (old: {
   pname = "luarocks-nix";
   version = "2021-01-22";
   src = fetchFromGitHub {
@@ -8,7 +8,7 @@ luarocks.overrideAttrs(old: {
     rev = "test-speedup";
     sha256 = "sha256-WfzLSpIp0V7Ib4sjYvoJHF+/vHaieccvfVAr5W47QsQ=";
   };
-  patches = [];
+  patches = [ ];
 
   meta.mainProgram = "luarocks";
 })

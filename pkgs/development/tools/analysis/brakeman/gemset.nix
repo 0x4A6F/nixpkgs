@@ -1,9 +1,9 @@
 {
   brakeman = {
-    groups = ["default"];
-    platforms = [];
+    groups = [ "default" ];
+    platforms = [ ];
     source = {
-      remotes = ["https://rubygems.org"];
+      remotes = [ "https://rubygems.org" ];
       sha256 = "1czqmrqbli2cnw4vv4pzz8bk78c7lpcnnyba74cj632swv1za6jd";
       type = "gem";
     };

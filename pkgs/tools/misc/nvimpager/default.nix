@@ -1,7 +1,12 @@
 { fetchFromGitHub
-, lib, stdenv
-, ncurses, neovim, procps
-, scdoc, lua51Packages, util-linux
+, lib
+, stdenv
+, ncurses
+, neovim
+, procps
+, scdoc
+, lua51Packages
+, util-linux
 }:
 
 stdenv.mkDerivation rec {
@@ -29,7 +34,7 @@ stdenv.mkDerivation rec {
     # remove git command from makefile as we run from a tarball
     # replace with actual timestamp of the commit
     substituteInPlace makefile --replace '$(shell git log -1 --no-show-signature --pretty="%ct")' 1623019602
-    '';
+  '';
 
   doCheck = true;
   checkInputs = [ lua51Packages.busted util-linux neovim ];

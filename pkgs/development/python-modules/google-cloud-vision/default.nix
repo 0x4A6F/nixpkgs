@@ -18,7 +18,7 @@ buildPythonPackage rec {
     sha256 = "4a7b1c025baedae220abef612dc01b822665e5db83d680d9a31be4e0a8490e3a";
   };
 
-  propagatedBuildInputs = [ libcst google-api-core proto-plus];
+  propagatedBuildInputs = [ libcst google-api-core proto-plus ];
 
   checkInputs = [ mock pytestCheckHook pytest-asyncio ];
 

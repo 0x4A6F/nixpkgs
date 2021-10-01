@@ -68,7 +68,7 @@ in
       };
 
       extraPackages = mkOption {
-        default = [];
+        default = [ ];
         type = types.listOf types.package;
         example = lib.literalExample "[ pkgs.ipset ]";
         description = ''
@@ -197,7 +197,7 @@ in
         description = ''
           The contents of Fail2ban's main configuration file.  It's
           generally not necessary to change it.
-       '';
+        '';
       };
 
       jails = mkOption {

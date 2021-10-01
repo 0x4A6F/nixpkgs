@@ -1,5 +1,12 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, linkFarmFromDrvs, makeWrapper,
-  dotnetPackages, dotnetCorePackages, altcoinSupport ? false
+{ lib
+, stdenv
+, fetchFromGitHub
+, fetchurl
+, linkFarmFromDrvs
+, makeWrapper
+, dotnetPackages
+, dotnetCorePackages
+, altcoinSupport ? false
 }:
 
 let

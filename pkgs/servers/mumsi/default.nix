@@ -1,5 +1,15 @@
-{ stdenv, lib, fetchFromGitHub, cmake, pkg-config, boost
-, log4cpp, pjsip, openssl, alsa-lib, mumlib }:
+{ stdenv
+, lib
+, fetchFromGitHub
+, cmake
+, pkg-config
+, boost
+, log4cpp
+, pjsip
+, openssl
+, alsa-lib
+, mumlib
+}:
 with lib; stdenv.mkDerivation {
   pname = "mumsi";
   version = "unstable-2018-12-12";

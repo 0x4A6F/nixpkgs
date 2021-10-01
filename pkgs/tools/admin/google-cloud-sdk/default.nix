@@ -45,7 +45,8 @@ let
     };
   }.${system};
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "google-cloud-sdk";
   version = "351.0.0";
 

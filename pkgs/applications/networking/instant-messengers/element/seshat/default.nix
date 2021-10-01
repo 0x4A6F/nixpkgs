@@ -18,7 +18,7 @@ rustPlatform.buildRustPackage rec {
 
   npm_config_nodedir = nodejs-14_x;
 
-  yarnOfflineCache = (callPackage ./yarn.nix {}).offline_cache;
+  yarnOfflineCache = (callPackage ./yarn.nix { }).offline_cache;
 
   buildPhase = ''
     cd ..

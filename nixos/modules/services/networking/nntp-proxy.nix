@@ -188,7 +188,7 @@ in
           NNTP-Proxy user configuration
         '';
 
-        default = {};
+        default = { };
         example = literalExample ''
           "user1" = {
             passwordHash = "$6$1l0t5Kn2Dk$appzivc./9l/kjq57eg5UCsBKlcfyCr0zNWYNerKoPsI1d7eAwiT0SVsOVx/CTgaBNT/u4fi2vN.iGlPfv1ek0";
@@ -213,13 +213,13 @@ in
       group = "nntp-proxy";
       description = "NNTP-Proxy daemon user";
     };
-    users.groups.nntp-proxy = {};
+    users.groups.nntp-proxy = { };
 
     systemd.services.nntp-proxy = {
       description = "NNTP proxy";
       after = [ "network.target" "nss-lookup.target" ];
       wantedBy = [ "multi-user.target" ];
-      serviceConfig = { User="nntp-proxy"; };
+      serviceConfig = { User = "nntp-proxy"; };
       serviceConfig.ExecStart = "${nntp-proxy}/bin/nntp-proxy ${confFile}";
       preStart = ''
         if [ ! \( -f ${cfg.sslCert} -a -f ${cfg.sslKey} \) ]; then

@@ -5,9 +5,9 @@ buildGoModule rec {
   version = "0.9.2";
 
   src = fetchFromGitHub {
-    owner  = "alecthomas";
-    repo   = pname;
-    rev    = "v${version}";
+    owner = "alecthomas";
+    repo = pname;
+    rev = "v${version}";
     sha256 = "19d7yr6q8kwrm91yyglmw9n7wa861sgi6dbwn8sl6dp55czfwvaq";
     # populate values otherwise taken care of by goreleaser,
     # unfortunately these require us to use git. By doing

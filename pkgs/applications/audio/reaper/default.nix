@@ -1,4 +1,6 @@
-{ config, lib, stdenv
+{ config
+, lib
+, stdenv
 , fetchurl
 , autoPatchelfHook
 , makeWrapper
@@ -11,8 +13,10 @@
 , xdg-utils
 , which
 
-, jackSupport ? true, libjack2
-, pulseaudioSupport ? config.pulseaudio or true, libpulseaudio
+, jackSupport ? true
+, libjack2
+, pulseaudioSupport ? config.pulseaudio or true
+, libpulseaudio
 }:
 
 stdenv.mkDerivation rec {
@@ -21,8 +25,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.reaper.fm/files/${lib.versions.major version}.x/reaper${builtins.replaceStrings ["."] [""] version}_linux_${stdenv.targetPlatform.qemuArch}.tar.xz";
-    hash = if stdenv.isx86_64 then "sha256-DOul6J2Y7szy4+Q4SeO0uG6PSuU+MELE7ky8W3mSpTQ="
-                              else "sha256-67iTi6bFlbQtyCjnPIjK8K/3aV+zaCsWBRCWmgYonM4=";
+    hash =
+      if stdenv.isx86_64 then "sha256-DOul6J2Y7szy4+Q4SeO0uG6PSuU+MELE7ky8W3mSpTQ="
+      else "sha256-67iTi6bFlbQtyCjnPIjK8K/3aV+zaCsWBRCWmgYonM4=";
   };
 
   nativeBuildInputs = [

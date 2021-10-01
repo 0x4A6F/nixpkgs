@@ -7,7 +7,8 @@
     ldapRootPassword = "foobar";
 
     testUser = "alice";
-  in import ./make-test-python.nix {
+  in
+  import ./make-test-python.nix {
     name = "sssd-ldap";
 
     meta = with pkgs.lib.maintainers; {

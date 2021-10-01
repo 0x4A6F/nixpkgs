@@ -1,5 +1,15 @@
-{ stdenv, lib, fetchFromGitea, pkg-config, meson, ninja, scdoc
-, freetype, fontconfig, pixman, tllist, check
+{ stdenv
+, lib
+, fetchFromGitea
+, pkg-config
+, meson
+, ninja
+, scdoc
+, freetype
+, fontconfig
+, pixman
+, tllist
+, check
 , withHarfBuzz ? true
 , harfbuzz
 }:

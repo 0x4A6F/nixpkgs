@@ -89,7 +89,7 @@ in
 
   config = mkIf config.services.firebird.enable {
 
-    environment.systemPackages = [cfg.package];
+    environment.systemPackages = [ cfg.package ];
 
     systemd.tmpfiles.rules = [
       "d '${dataDir}' 0700 ${cfg.user} - - -"
@@ -97,7 +97,8 @@ in
     ];
 
     systemd.services.firebird =
-      { description = "Firebird Super-Server";
+      {
+        description = "Firebird Super-Server";
 
         wantedBy = [ "multi-user.target" ];
 

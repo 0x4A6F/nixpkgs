@@ -22,13 +22,14 @@ stdenv.mkDerivation rec {
   pname = "fastnlo_toolkit";
   version = "2.5.0pre-${tag}";
 
-  src = fetchFromGitLab {
-    domain = "gitlab.etp.kit.edu";
-    owner = "qcd-public";
-    repo = "fastNLO";
-    rev = tag;
-    hash = "sha256-FEKnEnK90tT4BJJ6MLva9lCl3aYzO1YGdx/8Ol2vM7M=";
-  } + /v2.5/toolkit;
+  src = fetchFromGitLab
+    {
+      domain = "gitlab.etp.kit.edu";
+      owner = "qcd-public";
+      repo = "fastNLO";
+      rev = tag;
+      hash = "sha256-FEKnEnK90tT4BJJ6MLva9lCl3aYzO1YGdx/8Ol2vM7M=";
+    } + /v2.5/toolkit;
 
   postPatch = ''
     # remove duplicate macro, to fix for autoconf 2.70
@@ -44,7 +45,7 @@ stdenv.mkDerivation rec {
     lhapdf
     yoda
   ] ++ lib.optional withPython python
-    ++ lib.optional (withPython && python.isPy3k) ncurses;
+  ++ lib.optional (withPython && python.isPy3k) ncurses;
 
   propagatedBuildInputs = [
     zlib

@@ -6,14 +6,14 @@
 }:
 
 /* There is a project called "closure-linter" on PyPI that is the
-   same as this, but it does not appear to be owned by Google.
-   So we're pulling from Google's GitHub repo instead. */
+  same as this, but it does not appear to be owned by Google.
+  So we're pulling from Google's GitHub repo instead. */
 buildPythonPackage {
   pname = "closure-linter";
   version = "2.3.19";
 
   /* This project has no Python 3 support, as noted by
-     https://github.com/google/closure-linter/issues/81 */
+    https://github.com/google/closure-linter/issues/81 */
   disabled = isPy3k;
 
   src = fetchgit {

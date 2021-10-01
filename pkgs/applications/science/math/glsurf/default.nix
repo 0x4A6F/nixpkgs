@@ -1,5 +1,13 @@
-{ lib, stdenv, fetchurl, ocamlPackages, makeWrapper
-, libGLU, libGL, freeglut, mpfr, gmp
+{ lib
+, stdenv
+, fetchurl
+, ocamlPackages
+, makeWrapper
+, libGLU
+, libGL
+, freeglut
+, mpfr
+, gmp
 , pkgsHostTarget
 }:
 
@@ -18,13 +26,20 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     makeWrapper
   ] ++ (with ocamlPackages; [
-    ocaml findlib
+    ocaml
+    findlib
   ]);
 
   buildInputs = [
-    freeglut libGL libGLU mpfr gmp
+    freeglut
+    libGL
+    libGLU
+    mpfr
+    gmp
   ] ++ (with ocamlPackages; [
-    camlp4 lablgl camlimages_4_2_4
+    camlp4
+    lablgl
+    camlimages_4_2_4
   ]);
 
   postPatch = ''

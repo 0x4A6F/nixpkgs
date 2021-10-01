@@ -1,4 +1,7 @@
-{ lib, stdenv, fetchFromGitHub, which
+{ lib
+, stdenv
+, fetchFromGitHub
+, which
 , darwin ? null
 , xorgproto ? null
 , libX11
@@ -13,7 +16,7 @@ stdenv.mkDerivation {
   pname = "plan9port";
   version = "2021-04-22";
 
-  src =  fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "9fans";
     repo = "plan9port";
     rev = "70cc6e5ba7798b315c3fb3aae19620a01604a459";
@@ -44,10 +47,18 @@ stdenv.mkDerivation {
   buildInputs = [
     perl
   ] ++ lib.optionals (!stdenv.isDarwin) [
-    xorgproto libX11 libXext libXt fontconfig
+    xorgproto
+    libX11
+    libXext
+    libXt
+    fontconfig
     freetype # fontsrv wants ft2build.h provides system fonts for acme and sam.
   ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-    Carbon Cocoa IOKit Metal QuartzCore
+    Carbon
+    Cocoa
+    IOKit
+    Metal
+    QuartzCore
   ]);
 
   builder = ./builder.sh;

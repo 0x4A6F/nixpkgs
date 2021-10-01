@@ -1,14 +1,23 @@
-{ lib, stdenv, fetchFromGitHub, cmake, libpng, zlib, qt4,
-bison, flex, libGLU, python2Packages
+{ lib
+, stdenv
+, fetchFromGitHub
+, cmake
+, libpng
+, zlib
+, qt4
+, bison
+, flex
+, libGLU
+, python2Packages
 }:
 
 stdenv.mkDerivation {
   pname = "seexpr";
   version = "2.11";
   src = fetchFromGitHub {
-    owner  = "wdas";
-    repo   = "SeExpr";
-    rev    = "v2.11";
+    owner = "wdas";
+    repo = "SeExpr";
+    rev = "v2.11";
     sha256 = "0a44k56jf6dl36fwgg4zpc252wq5lf9cblg74mp73k82hxw439l4";
   };
 

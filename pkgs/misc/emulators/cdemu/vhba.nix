@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   pname = "vhba";
   version = "20210418";
 
-  src  = fetchurl {
+  src = fetchurl {
     url = "mirror://sourceforge/cdemu/vhba-module-${version}.tar.xz";
     sha256 = "119zgav6caialmf3hr096wkf72l9h76sqc9w5dhx26kj4yp85g8q";
   };

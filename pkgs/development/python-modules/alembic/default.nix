@@ -44,7 +44,8 @@ buildPythonPackage rec {
   ];
 
   pytestFlagsArray = [
-    "--numprocesses" "auto"
+    "--numprocesses"
+    "auto"
   ];
 
   meta = with lib; {

@@ -1,4 +1,4 @@
-{ pkgs ? import ../../../.. { config = {}; overlays = []; } }:
+{ pkgs ? import ../../../.. { config = { }; overlays = [ ]; } }:
 let
   inherit (pkgs)
     figlet
@@ -15,5 +15,5 @@ in
   inherit (pkgs)
     emptyFile
     emptyDirectory
-  ;
+    ;
 }

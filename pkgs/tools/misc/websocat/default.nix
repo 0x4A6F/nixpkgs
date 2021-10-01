@@ -1,5 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, pkg-config, openssl, rustPlatform, libiconv
-, Security, makeWrapper, bash }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, pkg-config
+, openssl
+, rustPlatform
+, libiconv
+, Security
+, makeWrapper
+, bash
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "websocat";
@@ -20,7 +29,7 @@ rustPlatform.buildRustPackage rec {
     ++ lib.optionals stdenv.isDarwin [ libiconv Security ];
 
   # Needed to get openssl-sys to use pkg-config.
-  OPENSSL_NO_VENDOR=1;
+  OPENSSL_NO_VENDOR = 1;
 
   # The wrapping is required so that the "sh-c" option of websocat works even
   # if sh is not in the PATH (as can happen, for instance, when websocat is

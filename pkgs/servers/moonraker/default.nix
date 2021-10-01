@@ -12,7 +12,8 @@ let
     libnacl
     paho-mqtt
   ]);
-in stdenvNoCC.mkDerivation rec {
+in
+stdenvNoCC.mkDerivation rec {
   pname = "moonraker";
   version = "unstable-2021-09-04";
 

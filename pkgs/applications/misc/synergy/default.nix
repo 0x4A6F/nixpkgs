@@ -1,7 +1,25 @@
-{ stdenv, lib, fetchpatch, fetchFromGitHub, cmake, openssl, qttools
-, ApplicationServices, Carbon, Cocoa, CoreServices, ScreenSaver
-, xlibsWrapper, libX11, libXi, libXtst, libXrandr, xinput, avahi-compat
-, withGUI ? true, wrapQtAppsHook }:
+{ stdenv
+, lib
+, fetchpatch
+, fetchFromGitHub
+, cmake
+, openssl
+, qttools
+, ApplicationServices
+, Carbon
+, Cocoa
+, CoreServices
+, ScreenSaver
+, xlibsWrapper
+, libX11
+, libXi
+, libXtst
+, libXrandr
+, xinput
+, avahi-compat
+, withGUI ? true
+, wrapQtAppsHook
+}:
 
 stdenv.mkDerivation rec {
   pname = "synergy";
@@ -33,9 +51,19 @@ stdenv.mkDerivation rec {
   ] ++ lib.optionals withGUI [
     qttools
   ] ++ lib.optionals stdenv.isDarwin [
-    ApplicationServices Carbon Cocoa CoreServices ScreenSaver
+    ApplicationServices
+    Carbon
+    Cocoa
+    CoreServices
+    ScreenSaver
   ] ++ lib.optionals stdenv.isLinux [
-    xlibsWrapper libX11 libXi libXtst libXrandr xinput avahi-compat
+    xlibsWrapper
+    libX11
+    libXi
+    libXtst
+    libXrandr
+    xinput
+    avahi-compat
   ];
 
   installPhase = ''

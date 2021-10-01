@@ -1,8 +1,66 @@
-{ lib, stdenv, fetchurl, python3Packages, docutils, help2man, installShellFiles
-, abootimg, acl, apksigner, apktool, binutils-unwrapped, bzip2, cbfstool, cdrkit, colord, colordiff, coreutils, cpio, db, diffutils, dtc
-, e2fsprogs, file, findutils, fontforge-fonttools, ffmpeg, fpc, gettext, ghc, ghostscriptX, giflib, gnumeric, gnupg, gnutar
-, gzip, hdf5, imagemagick, jdk, libarchive, libcaca, llvm, lz4, mono, openssh, openssl, pdftk, pgpdump, poppler_utils, qemu, R
-, radare2, sng, sqlite, squashfsTools, tcpdump, odt2txt, unzip, wabt, xxd, xz, zip, zstd
+{ lib
+, stdenv
+, fetchurl
+, python3Packages
+, docutils
+, help2man
+, installShellFiles
+, abootimg
+, acl
+, apksigner
+, apktool
+, binutils-unwrapped
+, bzip2
+, cbfstool
+, cdrkit
+, colord
+, colordiff
+, coreutils
+, cpio
+, db
+, diffutils
+, dtc
+, e2fsprogs
+, file
+, findutils
+, fontforge-fonttools
+, ffmpeg
+, fpc
+, gettext
+, ghc
+, ghostscriptX
+, giflib
+, gnumeric
+, gnupg
+, gnutar
+, gzip
+, hdf5
+, imagemagick
+, jdk
+, libarchive
+, libcaca
+, llvm
+, lz4
+, mono
+, openssh
+, openssl
+, pdftk
+, pgpdump
+, poppler_utils
+, qemu
+, R
+, radare2
+, sng
+, sqlite
+, squashfsTools
+, tcpdump
+, odt2txt
+, unzip
+, wabt
+, xxd
+, xz
+, zip
+, zstd
 , enableBloat ? false
 }:
 
@@ -42,20 +100,76 @@ python3Packages.buildPythonApplication rec {
   #
   # Still missing these tools: docx2txt dumpimage dumppdf dumpxsb enjarify lipo ocamlobjinfo oggDump otool procyon
   pythonPath = [
-      binutils-unwrapped bzip2 colordiff coreutils cpio db diffutils
-      e2fsprogs file findutils fontforge-fonttools gettext gnutar gzip
-      libarchive libcaca lz4 openssl pgpdump sng sqlite squashfsTools unzip xxd
-      xz zip zstd
-    ]
-    ++ (with python3Packages; [
-      argcomplete debian defusedxml jsondiff jsbeautifier libarchive-c
-      python_magic progressbar33 pypdf2 rpm tlsh
-    ])
-    ++ lib.optionals stdenv.isLinux [ python3Packages.pyxattr acl cdrkit dtc ]
-    ++ lib.optionals enableBloat ([
-      abootimg apksigner apktool cbfstool colord ffmpeg fpc ghc ghostscriptX giflib gnupg gnumeric
-      hdf5 imagemagick llvm jdk mono odt2txt openssh pdftk poppler_utils qemu R tcpdump wabt radare2
-    ] ++ (with python3Packages; [ binwalk guestfs h5py ]));
+    binutils-unwrapped
+    bzip2
+    colordiff
+    coreutils
+    cpio
+    db
+    diffutils
+    e2fsprogs
+    file
+    findutils
+    fontforge-fonttools
+    gettext
+    gnutar
+    gzip
+    libarchive
+    libcaca
+    lz4
+    openssl
+    pgpdump
+    sng
+    sqlite
+    squashfsTools
+    unzip
+    xxd
+    xz
+    zip
+    zstd
+  ]
+  ++ (with python3Packages; [
+    argcomplete
+    debian
+    defusedxml
+    jsondiff
+    jsbeautifier
+    libarchive-c
+    python_magic
+    progressbar33
+    pypdf2
+    rpm
+    tlsh
+  ])
+  ++ lib.optionals stdenv.isLinux [ python3Packages.pyxattr acl cdrkit dtc ]
+  ++ lib.optionals enableBloat ([
+    abootimg
+    apksigner
+    apktool
+    cbfstool
+    colord
+    ffmpeg
+    fpc
+    ghc
+    ghostscriptX
+    giflib
+    gnupg
+    gnumeric
+    hdf5
+    imagemagick
+    llvm
+    jdk
+    mono
+    odt2txt
+    openssh
+    pdftk
+    poppler_utils
+    qemu
+    R
+    tcpdump
+    wabt
+    radare2
+  ] ++ (with python3Packages; [ binwalk guestfs h5py ]));
 
   checkInputs = with python3Packages; [ pytestCheckHook ] ++ pythonPath;
 

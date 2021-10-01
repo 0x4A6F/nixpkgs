@@ -56,14 +56,14 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-     runHook preInstall
+    runHook preInstall
 
-     mkdir -p $out/bin/
-     cp BQN -t $out/bin/
-     ln -s $out/bin/BQN $out/bin/bqn
-     ln -s $out/bin/BQN $out/bin/cbqn
+    mkdir -p $out/bin/
+    cp BQN -t $out/bin/
+    ln -s $out/bin/BQN $out/bin/bqn
+    ln -s $out/bin/BQN $out/bin/cbqn
 
-     runHook postInstall
+    runHook postInstall
   '';
 
   meta = with lib; {

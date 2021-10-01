@@ -38,7 +38,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     numpy
     numexpr
-    setuptools  # uses pkg_resources at runtime
+    setuptools # uses pkg_resources at runtime
   ];
 
   patches = [

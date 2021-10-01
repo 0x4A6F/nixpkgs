@@ -1,4 +1,5 @@
-{ lib, stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , cmake
 , pkg-config
@@ -30,10 +31,10 @@ stdenv.mkDerivation rec {
   doCheck = false;
 
   meta = with lib; {
-    homepage    = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator";
+    homepage = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator";
     description = "A tool and a library for bi-directional translation between SPIR-V and LLVM IR";
-    license     = licenses.ncsa;
-    platforms   = platforms.all;
+    license = licenses.ncsa;
+    platforms = platforms.all;
     maintainers = with maintainers; [ gloaming ];
   };
 }

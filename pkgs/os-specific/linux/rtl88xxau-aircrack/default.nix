@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "pic" ];
 
-  NIX_CFLAGS_COMPILE="-Wno-error=incompatible-pointer-types";
+  NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
 
   # Fix build for 5.12 kernels
   patches = [

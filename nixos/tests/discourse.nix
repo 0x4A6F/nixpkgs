@@ -152,7 +152,7 @@ import ./make-test-python.nix (
                   smtp.quit()
             '';
           in
-            [ replyToEmail ];
+          [ replyToEmail ];
 
         networking.firewall.allowedTCPPorts = [ 25 ];
       };
@@ -166,7 +166,8 @@ import ./make-test-python.nix (
           target_usernames = admin.username;
           archetype = "private_message";
         };
-      in ''
+      in
+      ''
         discourse.start()
         client.start()
 
@@ -196,4 +197,5 @@ import ./make-test-python.nix (
             'curl -sS -f https://${discourseDomain}/t/$(<topic_id) -H "Accept: application/json" -H "Api-Key: $(<api_key)" -H "Api-Username: system" | jq -e \'if .post_stream.posts[1].cooked == "<p>Test reply.</p>" then true else null end\' '
         )
       '';
-  })
+  }
+)

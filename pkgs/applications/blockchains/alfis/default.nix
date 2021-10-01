@@ -1,5 +1,12 @@
-{ stdenv, lib, fetchFromGitHub, rustPlatform, pkg-config
-, withGui ? true, webkitgtk, Cocoa, WebKit
+{ stdenv
+, lib
+, fetchFromGitHub
+, rustPlatform
+, pkg-config
+, withGui ? true
+, webkitgtk
+, Cocoa
+, WebKit
 }:
 
 rustPlatform.buildRustPackage rec {

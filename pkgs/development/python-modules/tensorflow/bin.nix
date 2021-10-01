@@ -2,7 +2,10 @@
 , lib
 , fetchurl
 , buildPythonPackage
-, isPy3k, pythonOlder, pythonAtLeast, isPy38
+, isPy3k
+, pythonOlder
+, pythonAtLeast
+, isPy38
 , astor
 , gast
 , google-pasta
@@ -40,7 +43,7 @@
 # - the source build is currently brittle and not easy to maintain
 
 assert cudaSupport -> cudatoolkit != null
-                   && cudnn != null;
+  && cudnn != null;
 
 # unsupported combination
 assert ! (stdenv.isDarwin && cudaSupport);
@@ -52,19 +55,22 @@ let
   pname = "tensorflow${variant}";
   metadataPatch = ./relax-dependencies-metadata.patch;
   patch = ./relax-dependencies.patch;
-in buildPythonPackage {
+in
+buildPythonPackage {
   inherit pname;
   inherit (packages) version;
   format = "wheel";
 
   disabled = pythonAtLeast "3.9";
 
-  src = let
-    pyVerNoDot = lib.strings.stringAsChars (x: if x == "." then "" else x) python.pythonVersion;
-    platform = if stdenv.isDarwin then "mac" else "linux";
-    unit = if cudaSupport then "gpu" else "cpu";
-    key = "${platform}_py_${pyVerNoDot}_${unit}";
-  in fetchurl packages.${key};
+  src =
+    let
+      pyVerNoDot = lib.strings.stringAsChars (x: if x == "." then "" else x) python.pythonVersion;
+      platform = if stdenv.isDarwin then "mac" else "linux";
+      unit = if cudaSupport then "gpu" else "cpu";
+      key = "${platform}_py_${pyVerNoDot}_${unit}";
+    in
+    fetchurl packages.${key};
 
   propagatedBuildInputs = [
     astunparse
@@ -88,7 +94,7 @@ in buildPythonPackage {
     keras-preprocessing
     h5py
   ] ++ lib.optional (!isPy3k) mock
-    ++ lib.optionals (pythonOlder "3.4") [ backports_weakref ];
+  ++ lib.optionals (pythonOlder "3.4") [ backports_weakref ];
 
   nativeBuildInputs = [ wheel ] ++ lib.optional cudaSupport addOpenGLRunpath;
 

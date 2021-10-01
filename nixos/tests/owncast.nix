@@ -1,5 +1,7 @@
-{ system ? builtins.currentSystem, config ? { }
-, pkgs ? import ../.. { inherit system config; } }:
+{ system ? builtins.currentSystem
+, config ? { }
+, pkgs ? import ../.. { inherit system config; }
+}:
 
 with import (nixpkgs + "/nixos/lib/testing-python.nix") { inherit system; };
 makeTest {

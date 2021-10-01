@@ -18,9 +18,9 @@ buildPythonPackage rec {
   disabled = pythonOlder "3.6";
 
   src = fetchFromGitHub {
-    owner  = pname;
-    repo   = pname;
-    rev    = "v${version}";
+    owner = pname;
+    repo = pname;
+    rev = "v${version}";
     sha256 = "sha256-TNDQV1BOVVdvr0XAyWGcwgMbe4mV7J05hQeKVUqVT9s=";
   };
 
@@ -56,9 +56,9 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Cross-platform CLI and Python drivers for AIO liquid coolers and other devices";
-    homepage    = "https://github.com/liquidctl/liquidctl";
-    changelog   = "https://github.com/liquidctl/liquidctl/blob/master/CHANGELOG.md";
-    license     = licenses.gpl3Plus;
+    homepage = "https://github.com/liquidctl/liquidctl";
+    changelog = "https://github.com/liquidctl/liquidctl/blob/master/CHANGELOG.md";
+    license = licenses.gpl3Plus;
     maintainers = with maintainers; [ arturcygan evils ];
   };
 }

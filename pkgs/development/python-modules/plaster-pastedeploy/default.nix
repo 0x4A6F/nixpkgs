@@ -1,6 +1,10 @@
-{ buildPythonPackage, fetchPypi, fetchpatch
-, plaster, PasteDeploy
-, pytest, pytest-cov
+{ buildPythonPackage
+, fetchPypi
+, fetchpatch
+, plaster
+, PasteDeploy
+, pytest
+, pytest-cov
 }:
 
 buildPythonPackage rec {

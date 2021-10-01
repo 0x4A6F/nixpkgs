@@ -12,7 +12,8 @@ buildGoModule rec {
   };
 
   ldflags = [
-    "-w" "-s"
+    "-w"
+    "-s"
     "-X github.com/jlesquembre/kubeprompt/pkg/version.Version=${version}"
   ];
 

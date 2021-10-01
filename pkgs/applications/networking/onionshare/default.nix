@@ -110,7 +110,7 @@ rec {
     disabledTests = [
       "test_firefox_like_behavior"
       "test_if_unmodified_since"
-      "test_get_tor_paths_linux"  # expects /usr instead of /nix/store
+      "test_get_tor_paths_linux" # expects /usr instead of /nix/store
     ];
   };
 

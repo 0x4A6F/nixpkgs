@@ -7,7 +7,7 @@
 , mixEnv ? "prod"
 , debug ? false
 , meta ? { }
-, patches ? []
+, patches ? [ ]
 , ...
 }@attrs:
 

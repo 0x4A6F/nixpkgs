@@ -1,12 +1,24 @@
-{ lib, stdenv, rustPlatform, fetchFromGitHub, fetchurl, nixosTests
-, pkg-config, openssl
-, libiconv, Security, CoreServices
-, dbBackend ? "sqlite", libmysqlclient, postgresql }:
+{ lib
+, stdenv
+, rustPlatform
+, fetchFromGitHub
+, fetchurl
+, nixosTests
+, pkg-config
+, openssl
+, libiconv
+, Security
+, CoreServices
+, dbBackend ? "sqlite"
+, libmysqlclient
+, postgresql
+}:
 
 let
   featuresFlag = "--features ${dbBackend}";
 
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "vaultwarden";
   version = "1.22.2";
 

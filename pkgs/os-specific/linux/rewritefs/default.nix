@@ -5,9 +5,9 @@ stdenv.mkDerivation {
   version = "2020-02-21";
 
   src = fetchFromGitHub {
-    owner  = "sloonz";
-    repo   = "rewritefs";
-    rev    = "bc241c7f81e626766786b56cf71d32c1a6ad510c";
+    owner = "sloonz";
+    repo = "rewritefs";
+    rev = "bc241c7f81e626766786b56cf71d32c1a6ad510c";
     sha256 = "0zj2560hcbg5az0r8apnv0zz9b22i9r9w6rlih0rbrn673xp7q2i";
   };
 
@@ -27,9 +27,9 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = ''A FUSE filesystem intended to be used
       like Apache mod_rewrite'';
-    homepage    = "https://github.com/sloonz/rewritefs";
-    license     = licenses.gpl2;
+    homepage = "https://github.com/sloonz/rewritefs";
+    license = licenses.gpl2;
     maintainers = with maintainers; [ rnhmjoj ];
-    platforms   = platforms.linux;
+    platforms = platforms.linux;
   };
 }

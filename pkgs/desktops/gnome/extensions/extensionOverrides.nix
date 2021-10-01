@@ -1,7 +1,7 @@
-{
-  lib,
-  ddcutil,
-  gjs,
+{ lib
+, ddcutil
+, gjs
+,
 }:
 # A set of overrides for automatically packaged extensions that require some small fixes.
 # The input must be an attribute set with the extensions' UUIDs as keys and the extension

@@ -1,6 +1,14 @@
-{ rustPlatform, stdenv, lib, fetchFromGitHub, fetchurl
-, pkg-config, curl, openssl
-, CoreFoundation, libiconv, Security
+{ rustPlatform
+, stdenv
+, lib
+, fetchFromGitHub
+, fetchurl
+, pkg-config
+, curl
+, openssl
+, CoreFoundation
+, libiconv
+, Security
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -33,7 +41,7 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [ pkg-config (lib.getDev curl) ];
   buildInputs = [ openssl curl ]
-  ++ lib.optionals stdenv.isDarwin [ CoreFoundation libiconv Security ];
+    ++ lib.optionals stdenv.isDarwin [ CoreFoundation libiconv Security ];
 
   # Ensure that we are avoiding build of the curl vendored in curl-sys
   doInstallCheck = stdenv.hostPlatform.libc == "glibc";

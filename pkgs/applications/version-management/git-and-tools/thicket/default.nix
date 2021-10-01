@@ -6,7 +6,8 @@
 let
   crystal = crystal_1_0;
 
-in crystal.buildCrystalPackage rec {
+in
+crystal.buildCrystalPackage rec {
   pname = "thicket";
   version = "0.1.5";
 

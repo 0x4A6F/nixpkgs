@@ -36,9 +36,9 @@ with self; with super; {
 
   box2d = callPackage ../development/python-modules/box2d { };
 
-  boto3 = callPackage ../development/python-modules/boto3/1_17.nix {};
+  boto3 = callPackage ../development/python-modules/boto3/1_17.nix { };
 
-  botocore = callPackage ../development/python-modules/botocore/1_20.nix {};
+  botocore = callPackage ../development/python-modules/botocore/1_20.nix { };
 
   browsermob-proxy = callPackage ../development/python-modules/browsermob-proxy { };
 
@@ -469,10 +469,11 @@ with self; with super; {
 
   pylint = callPackage ../development/python-modules/pylint/1.9.nix { };
 
-  pyobjc = if stdenv.isDarwin then
-    callPackage ../development/python-modules/pyobjc { }
-  else
-    throw "pyobjc can only be built on Mac OS";
+  pyobjc =
+    if stdenv.isDarwin then
+      callPackage ../development/python-modules/pyobjc { }
+    else
+      throw "pyobjc can only be built on Mac OS";
 
   pyPdf = callPackage ../development/python-modules/pypdf { };
 

@@ -11,7 +11,8 @@ with lib; mkCoqDerivation {
   defaultVersion = with versions; switch [ coq.version mathcomp.version ] [
     { cases = [ (range "8.10" "8.13") "1.12.0" ]; out = "1.12"; }
     { cases = [ (range "8.10" "8.12") "1.11.0" ]; out = "1.11"; }
-  ] null;
+  ]
+    null;
 
   propagatedBuildInputs =
     [ mathcomp.ssreflect mathcomp.algebra ];

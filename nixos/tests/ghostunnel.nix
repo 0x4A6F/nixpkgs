@@ -3,7 +3,7 @@
   nodes = {
     backend = { pkgs, ... }: {
       services.nginx.enable = true;
-      services.nginx.virtualHosts."backend".root = pkgs.runCommand "webroot" {} ''
+      services.nginx.virtualHosts."backend".root = pkgs.runCommand "webroot" { } ''
         mkdir $out
         echo hi >$out/hi.txt
       '';
@@ -25,7 +25,7 @@
         key = "/root/service-key.pem";
         cacert = "/root/ca.pem";
         target = "backend:80";
-        allowCN = ["client"];
+        allowCN = [ "client" ];
         unsafeTarget = true;
       };
       networking.firewall.allowedTCPPorts = [ 443 1443 ];

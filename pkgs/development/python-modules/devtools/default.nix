@@ -1,5 +1,11 @@
-{ buildPythonPackage, pythonOlder, fetchFromGitHub, lib, pygments
-, pytestCheckHook, pytest-mock }:
+{ buildPythonPackage
+, pythonOlder
+, fetchFromGitHub
+, lib
+, pygments
+, pytestCheckHook
+, pytest-mock
+}:
 
 buildPythonPackage rec {
   pname = "devtools";

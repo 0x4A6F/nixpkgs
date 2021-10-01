@@ -1,4 +1,5 @@
-{ lib, stdenv
+{ lib
+, stdenv
 , fetchurl
 , autoreconfHook
 , docbook_xsl
@@ -16,7 +17,8 @@
 
 let
   enableValgrindTests = !stdenv.isDarwin && lib.meta.availableOn stdenv.hostPlatform valgrind;
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "libpsl";
   version = "0.21.0";
 

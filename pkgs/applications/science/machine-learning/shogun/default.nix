@@ -1,13 +1,36 @@
-{ stdenv, lib, fetchFromGitHub, fetchpatch, fetchurl, cmake, ctags, swig
-# data, compression
-, bzip2, curl, hdf5, json_c, xz, lzo, protobuf, snappy
-# maths
-, blas, lapack, eigen, nlopt, lp_solve, colpack, glpk
-# libraries
-, libarchive, libxml2
-# extra support
-, pythonSupport ? true, pythonPackages ? null
-, opencvSupport ? false, opencv ? null
+{ stdenv
+, lib
+, fetchFromGitHub
+, fetchpatch
+, fetchurl
+, cmake
+, ctags
+, swig
+  # data, compression
+, bzip2
+, curl
+, hdf5
+, json_c
+, xz
+, lzo
+, protobuf
+, snappy
+  # maths
+, blas
+, lapack
+, eigen
+, nlopt
+, lp_solve
+, colpack
+, glpk
+  # libraries
+, libarchive
+, libxml2
+  # extra support
+, pythonSupport ? true
+, pythonPackages ? null
+, opencvSupport ? false
+, opencv ? null
 , withSvmLight ? false
 }:
 
@@ -63,32 +86,50 @@ stdenv.mkDerivation rec {
     })
   ] ++ lib.optional (!withSvmLight) ./svmlight-scrubber.patch;
 
-  CCACHE_DISABLE="1";
-  CCACHE_DIR=".ccache";
+  CCACHE_DISABLE = "1";
+  CCACHE_DIR = ".ccache";
 
   nativeBuildInputs = [ cmake ];
   buildInputs = with lib; [
-      blas lapack bzip2 colpack curl ctags eigen hdf5 json_c lp_solve xz lzo
-      protobuf nlopt snappy swig (libarchive.dev) libxml2 lapack glpk
-    ]
-    ++ optionals (pythonSupport) (with pythonPackages; [ python ply numpy ])
-    ++ optional  (opencvSupport) opencv;
+    blas
+    lapack
+    bzip2
+    colpack
+    curl
+    ctags
+    eigen
+    hdf5
+    json_c
+    lp_solve
+    xz
+    lzo
+    protobuf
+    nlopt
+    snappy
+    swig
+    (libarchive.dev)
+    libxml2
+    lapack
+    glpk
+  ]
+  ++ optionals (pythonSupport) (with pythonPackages; [ python ply numpy ])
+  ++ optional (opencvSupport) opencv;
 
-  NIX_CFLAGS_COMPILE="-faligned-new";
+  NIX_CFLAGS_COMPILE = "-faligned-new";
 
   cmakeFlags =
-  let
+    let
       onOff = b: if b then "ON" else "OFF";
-      flag = n: b: "-D"+n+"="+onOff b;
-  in
-  with lib; [
-    (flag "ENABLE_TESTING" doCheck)
-    (flag "BUILD_META_EXAMPLES" doCheck)
-    (flag "CMAKE_VERBOSE_MAKEFILE:BOOL" doCheck)
-    (flag "PythonModular" pythonSupport)
-    (flag "OpenCV" opencvSupport)
-    (flag "USE_SVMLIGHT" withSvmLight)
-  ];
+      flag = n: b: "-D" + n + "=" + onOff b;
+    in
+    with lib; [
+      (flag "ENABLE_TESTING" doCheck)
+      (flag "BUILD_META_EXAMPLES" doCheck)
+      (flag "CMAKE_VERBOSE_MAKEFILE:BOOL" doCheck)
+      (flag "PythonModular" pythonSupport)
+      (flag "OpenCV" opencvSupport)
+      (flag "USE_SVMLIGHT" withSvmLight)
+    ];
 
   postPatch = ''
     # Fix preprocessing SVMlight code

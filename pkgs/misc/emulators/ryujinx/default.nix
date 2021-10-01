@@ -1,8 +1,26 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, makeWrapper, makeDesktopItem, linkFarmFromDrvs
-, dotnet-sdk_5, dotnetPackages, dotnetCorePackages, cacert
-, libX11, libgdiplus, ffmpeg
-, SDL2_mixer, openal, libsoundio, sndio, pulseaudio
-, gtk3, gobject-introspection, gdk-pixbuf, wrapGAppsHook
+{ lib
+, stdenv
+, fetchFromGitHub
+, fetchurl
+, makeWrapper
+, makeDesktopItem
+, linkFarmFromDrvs
+, dotnet-sdk_5
+, dotnetPackages
+, dotnetCorePackages
+, cacert
+, libX11
+, libgdiplus
+, ffmpeg
+, SDL2_mixer
+, openal
+, libsoundio
+, sndio
+, pulseaudio
+, gtk3
+, gobject-introspection
+, gdk-pixbuf
+, wrapGAppsHook
 }:
 
 let
@@ -17,7 +35,8 @@ let
     sndio
     pulseaudio
   ];
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "ryujinx";
   version = "1.0.7047"; # Versioning is based off of the official appveyor builds: https://ci.appveyor.com/project/gdkchan/ryujinx
 

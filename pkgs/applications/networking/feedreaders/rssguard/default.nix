@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-Q2yVprIB8YeB8bCAau1H2m8QOidX1RrMIRET/fXyNi4=";
   };
 
-  buildInputs =  [ qtwebengine qttools ];
+  buildInputs = [ qtwebengine qttools ];
   nativeBuildInputs = [ qmake wrapGAppsHook wrapQtAppsHook ];
   qmakeFlags = [ "CONFIG+=release" ];
 

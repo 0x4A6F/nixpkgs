@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   suffix = {
     aarch64-linux = "aarch64-linux";
     x86_64-darwin = "mac-10.14.6";
-    x86_64-linux  = "x86_64-linux";
+    x86_64-linux = "x86_64-linux";
   }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   src = fetchurl {
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     sha256 = {
       aarch64-linux = "0y4nyrff5bq90v44z2h90gqgl18bs861i9lygx4z89ym85jycx9s";
       x86_64-darwin = "1r3yidmgx1xq1f19y2c5njf2g95vs9cssmmsxsb68qm192r58i8a";
-      x86_64-linux  = "1skcalz1sr0hhpjcl8qjsqd16n2w0zrbnlrbr8sx0g728kiqsnwc";
+      x86_64-linux = "1skcalz1sr0hhpjcl8qjsqd16n2w0zrbnlrbr8sx0g728kiqsnwc";
     }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 

@@ -1,9 +1,17 @@
 { version, sha256 }:
 
-{ lib, stdenv, buildPackages, fetchurl, perl, xz, gettext
+{ lib
+, stdenv
+, buildPackages
+, fetchurl
+, perl
+, xz
+, gettext
 
-# we are a dependency of gcc, this simplifies bootstraping
-, interactive ? false, ncurses, procps
+  # we are a dependency of gcc, this simplifies bootstraping
+, interactive ? false
+, ncurses
+, procps
 }:
 
 # Note: this package is used for bootstrapping fetchurl, and thus
@@ -54,11 +62,12 @@ stdenv.mkDerivation {
     && !stdenv.isDarwin
     && !stdenv.isSunOS; # flaky
 
-  checkFlagsArray = if version == "6.8" then [
-    # Test is known to fail on various locales on texinfo-6.8:
-    #   https://lists.gnu.org/r/bug-texinfo/2021-07/msg00012.html
-    "XFAIL_TESTS=test_scripts/layout_formatting_fr_icons.sh"
-  ] else null;
+  checkFlagsArray =
+    if version == "6.8" then [
+      # Test is known to fail on various locales on texinfo-6.8:
+      #   https://lists.gnu.org/r/bug-texinfo/2021-07/msg00012.html
+      "XFAIL_TESTS=test_scripts/layout_formatting_fr_icons.sh"
+    ] else null;
 
   meta = {
     homepage = "https://www.gnu.org/software/texinfo/";

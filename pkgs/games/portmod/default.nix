@@ -1,6 +1,21 @@
-{ lib, callPackage, python3Packages, fetchFromGitLab, cacert,
-  rustPlatform, bubblewrap, git, perlPackages, imagemagick, fetchurl, fetchzip,
-  jre, makeWrapper, tr-patcher, tes3cmd, fetchpatch }:
+{ lib
+, callPackage
+, python3Packages
+, fetchFromGitLab
+, cacert
+, rustPlatform
+, bubblewrap
+, git
+, perlPackages
+, imagemagick
+, fetchurl
+, fetchzip
+, jre
+, makeWrapper
+, tr-patcher
+, tes3cmd
+, fetchpatch
+}:
 
 let
   version = "2.0.3";

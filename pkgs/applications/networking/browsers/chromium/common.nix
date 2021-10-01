@@ -1,50 +1,93 @@
-{ stdenv, lib, fetchurl, fetchpatch
-# Channel data:
-, channel, upstream-info
-# Helper functions:
-, chromiumVersionAtLeast, versionRange
+{ stdenv
+, lib
+, fetchurl
+, fetchpatch
+  # Channel data:
+, channel
+, upstream-info
+  # Helper functions:
+, chromiumVersionAtLeast
+, versionRange
 
-# Native build inputs:
-, ninja, pkg-config
-, python2, python3, perl
-, gnutar, which
+  # Native build inputs:
+, ninja
+, pkg-config
+, python2
+, python3
+, perl
+, gnutar
+, which
 , llvmPackages
-# postPatch:
+  # postPatch:
 , pkgsBuildHost
-# configurePhase:
+  # configurePhase:
 , gnChromium
 
-# Build inputs:
+  # Build inputs:
 , libpng
-, bzip2, flac, speex, libopus
-, libevent, expat, libjpeg, snappy
+, bzip2
+, flac
+, speex
+, libopus
+, libevent
+, expat
+, libjpeg
+, snappy
 , libcap
-, xdg-utils, minizip, libwebp
-, libusb1, re2
-, ffmpeg, libxslt, libxml2
+, xdg-utils
+, minizip
+, libwebp
+, libusb1
+, re2
+, ffmpeg
+, libxslt
+, libxml2
 , nasm
-, nspr, nss, systemd
-, util-linux, alsa-lib
-, bison, gperf, libkrb5
-, glib, gtk3, dbus-glib
-, libXScrnSaver, libXcursor, libXtst, libxshmfence, libGLU, libGL
+, nspr
+, nss
+, systemd
+, util-linux
+, alsa-lib
+, bison
+, gperf
+, libkrb5
+, glib
+, gtk3
+, dbus-glib
+, libXScrnSaver
+, libXcursor
+, libXtst
+, libxshmfence
+, libGLU
+, libGL
 , mesa
-, pciutils, protobuf, speechd, libXdamage, at-spi2-core
+, pciutils
+, protobuf
+, speechd
+, libXdamage
+, at-spi2-core
 , pipewire
 , libva
-, libdrm, wayland, libxkbcommon # Ozone
+, libdrm
+, wayland
+, libxkbcommon # Ozone
 , curl
-# postPatch:
+  # postPatch:
 , glibc # gconv + locale
 
-# Package customization:
-, gnomeSupport ? false, gnome2 ? null
-, gnomeKeyringSupport ? false, libgnome-keyring3 ? null
-, cupsSupport ? true, cups ? null
+  # Package customization:
+, gnomeSupport ? false
+, gnome2 ? null
+, gnomeKeyringSupport ? false
+, libgnome-keyring3 ? null
+, cupsSupport ? true
+, cups ? null
 , proprietaryCodecs ? true
-, pulseSupport ? false, libpulseaudio ? null
-, ungoogled ? false, ungoogled-chromium
-# Optional dependencies:
+, pulseSupport ? false
+, libpulseaudio ? null
+, ungoogled ? false
+, ungoogled-chromium
+  # Optional dependencies:
 , libgcrypt ? null # gnomeSupport || cupsSupport
 }:
 
@@ -53,11 +96,15 @@ buildFun:
 with lib;
 
 let
-  python2WithPackages = python2.withPackages(ps: with ps; [
-    ply jinja2 setuptools
+  python2WithPackages = python2.withPackages (ps: with ps; [
+    ply
+    jinja2
+    setuptools
   ]);
-  python3WithPackages = python3.withPackages(ps: with ps; [
-    ply jinja2 setuptools
+  python3WithPackages = python3.withPackages (ps: with ps; [
+    ply
+    jinja2
+    setuptools
   ]);
 
   # The additional attributes for creating derivations based on the chromium
@@ -82,7 +129,8 @@ let
         else if isString value then mkGnString value
         else throw "Unsupported type for GN value `${value}'.";
       toFlag = key: value: "${key}=${sanitize value}";
-    in attrs: concatStringsSep " " (attrValues (mapAttrs toFlag attrs));
+    in
+    attrs: concatStringsSep " " (attrValues (mapAttrs toFlag attrs));
 
   # https://source.chromium.org/chromium/chromium/src/+/master:build/linux/unbundle/replace_gn_files.py
   gnSystemLibraries = lib.optionals (!chromiumVersionAtLeast "95") [
@@ -124,36 +172,70 @@ let
     };
 
     nativeBuildInputs = [
-      ninja pkg-config
-      python2WithPackages python3WithPackages perl
-      gnutar which
+      ninja
+      pkg-config
+      python2WithPackages
+      python3WithPackages
+      perl
+      gnutar
+      which
       llvmPackages.bintools
     ];
 
     buildInputs = [
       (libpng.override { apngSupport = false; }) # https://bugs.chromium.org/p/chromium/issues/detail?id=752403
-      bzip2 flac speex opusWithCustomModes
-      libevent expat libjpeg snappy
+      bzip2
+      flac
+      speex
+      opusWithCustomModes
+      libevent
+      expat
+      libjpeg
+      snappy
       libcap
-      xdg-utils minizip libwebp
-      libusb1 re2
-      ffmpeg libxslt libxml2
+      xdg-utils
+      minizip
+      libwebp
+      libusb1
+      re2
+      ffmpeg
+      libxslt
+      libxml2
       nasm
-      nspr nss systemd
-      util-linux alsa-lib
-      bison gperf libkrb5
-      glib gtk3 dbus-glib
-      libXScrnSaver libXcursor libXtst libxshmfence libGLU libGL
+      nspr
+      nss
+      systemd
+      util-linux
+      alsa-lib
+      bison
+      gperf
+      libkrb5
+      glib
+      gtk3
+      dbus-glib
+      libXScrnSaver
+      libXcursor
+      libXtst
+      libxshmfence
+      libGLU
+      libGL
       mesa # required for libgbm
-      pciutils protobuf speechd libXdamage at-spi2-core
+      pciutils
+      protobuf
+      speechd
+      libXdamage
+      at-spi2-core
       pipewire
       libva
-      libdrm wayland mesa.drivers libxkbcommon
+      libdrm
+      wayland
+      mesa.drivers
+      libxkbcommon
       curl
     ] ++ optionals gnomeSupport [ gnome2.GConf libgcrypt ]
-      ++ optional gnomeKeyringSupport libgnome-keyring3
-      ++ optionals cupsSupport [ libgcrypt cups ]
-      ++ optional pulseSupport libpulseaudio;
+    ++ optional gnomeKeyringSupport libgnome-keyring3
+    ++ optionals cupsSupport [ libgcrypt cups ]
+    ++ optional pulseSupport libpulseaudio;
 
     patches = [
       # Optional patch to use SOURCE_DATE_EPOCH in compute_build_timestamp.py (should be upstreamed):
@@ -301,7 +383,7 @@ let
       safe_browsing_mode = 0;
       use_official_google_api_keys = false;
       use_unofficial_version_number = false;
-    } // (extraAttrs.gnFlags or {}));
+    } // (extraAttrs.gnFlags or { }));
 
     configurePhase = ''
       runHook preConfigure
@@ -322,19 +404,21 @@ let
     # of approx. 25 MB without this option (and this saves e.g. 66 %).
     NIX_CFLAGS_COMPILE = "-Wno-unknown-warning-option";
 
-    buildPhase = let
-      buildCommand = target: ''
-        ninja -C "${buildPath}" -j$NIX_BUILD_CORES -l$NIX_BUILD_CORES "${target}"
-        (
-          source chrome/installer/linux/common/installer.include
-          PACKAGE=$packageName
-          MENUNAME="Chromium"
-          process_template chrome/app/resources/manpage.1.in "${buildPath}/chrome.1"
-        )
-      '';
-      targets = extraAttrs.buildTargets or [];
-      commands = map buildCommand targets;
-    in concatStringsSep "\n" commands;
+    buildPhase =
+      let
+        buildCommand = target: ''
+          ninja -C "${buildPath}" -j$NIX_BUILD_CORES -l$NIX_BUILD_CORES "${target}"
+          (
+            source chrome/installer/linux/common/installer.include
+            PACKAGE=$packageName
+            MENUNAME="Chromium"
+            process_template chrome/app/resources/manpage.1.in "${buildPath}/chrome.1"
+          )
+        '';
+        targets = extraAttrs.buildTargets or [ ];
+        commands = map buildCommand targets;
+      in
+      concatStringsSep "\n" commands;
 
     postFixup = ''
       # Make sure that libGLESv2 is found by dlopen (if using EGL).
@@ -351,7 +435,10 @@ let
     };
   };
 
-# Remove some extraAttrs we supplied to the base attributes already.
-in stdenv.mkDerivation (base // removeAttrs extraAttrs [
-  "name" "gnFlags" "buildTargets"
-] // { passthru = base.passthru // (extraAttrs.passthru or {}); })
+  # Remove some extraAttrs we supplied to the base attributes already.
+in
+stdenv.mkDerivation (base // removeAttrs extraAttrs [
+  "name"
+  "gnFlags"
+  "buildTargets"
+] // { passthru = base.passthru // (extraAttrs.passthru or { }); })

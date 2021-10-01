@@ -1,5 +1,13 @@
-{ lib, stdenv, rustPlatform, fetchCrate, installShellFiles
-, libgpgerror, gpgme, gettext, openssl, Security
+{ lib
+, stdenv
+, rustPlatform
+, fetchCrate
+, installShellFiles
+, libgpgerror
+, gpgme
+, gettext
+, openssl
+, Security
 }:
 
 rustPlatform.buildRustPackage rec {

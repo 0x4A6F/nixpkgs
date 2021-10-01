@@ -1,12 +1,29 @@
-{ lib, stdenv, fetchurl, perlPackages, gettext, makeWrapper, ImageMagick, which, highlight
-, gitSupport ? false, git
-, docutilsSupport ? false, python, docutils
-, monotoneSupport ? false, monotone
-, bazaarSupport ? false, breezy
-, cvsSupport ? false, cvs, cvsps
-, subversionSupport ? false, subversion
-, mercurialSupport ? false, mercurial
-, extraUtils ? []
+{ lib
+, stdenv
+, fetchurl
+, perlPackages
+, gettext
+, makeWrapper
+, ImageMagick
+, which
+, highlight
+, gitSupport ? false
+, git
+, docutilsSupport ? false
+, python
+, docutils
+, monotoneSupport ? false
+, monotone
+, bazaarSupport ? false
+, breezy
+, cvsSupport ? false
+, cvs
+, cvsps
+, subversionSupport ? false
+, subversion
+, mercurialSupport ? false
+, mercurial
+, extraUtils ? [ ]
 }:
 
 stdenv.mkDerivation rec {
@@ -19,17 +36,38 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ which highlight ]
-    ++ (with perlPackages; [ perl TextMarkdown URI HTMLParser HTMLScrubber HTMLTemplate
-      TimeDate gettext makeWrapper DBFile CGISession CGIFormBuilder LocaleGettext
-      RpcXML XMLSimple ImageMagick YAML YAMLLibYAML HTMLTree AuthenPassphrase
-      NetOpenIDConsumer LWPxParanoidAgent CryptSSLeay ])
-    ++ lib.optionals docutilsSupport [python docutils]
-    ++ lib.optionals gitSupport [git]
-    ++ lib.optionals monotoneSupport [monotone]
-    ++ lib.optionals bazaarSupport [breezy]
-    ++ lib.optionals cvsSupport [cvs cvsps perlPackages.Filechdir]
-    ++ lib.optionals subversionSupport [subversion]
-    ++ lib.optionals mercurialSupport [mercurial];
+    ++ (with perlPackages; [
+    perl
+    TextMarkdown
+    URI
+    HTMLParser
+    HTMLScrubber
+    HTMLTemplate
+    TimeDate
+    gettext
+    makeWrapper
+    DBFile
+    CGISession
+    CGIFormBuilder
+    LocaleGettext
+    RpcXML
+    XMLSimple
+    ImageMagick
+    YAML
+    YAMLLibYAML
+    HTMLTree
+    AuthenPassphrase
+    NetOpenIDConsumer
+    LWPxParanoidAgent
+    CryptSSLeay
+  ])
+    ++ lib.optionals docutilsSupport [ python docutils ]
+    ++ lib.optionals gitSupport [ git ]
+    ++ lib.optionals monotoneSupport [ monotone ]
+    ++ lib.optionals bazaarSupport [ breezy ]
+    ++ lib.optionals cvsSupport [ cvs cvsps perlPackages.Filechdir ]
+    ++ lib.optionals subversionSupport [ subversion ]
+    ++ lib.optionals mercurialSupport [ mercurial ];
 
   # A few markdown tests fail, but this is expected when using Text::Markdown
   # instead of Text::Markdown::Discount.

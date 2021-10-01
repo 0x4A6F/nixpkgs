@@ -1,9 +1,12 @@
-{ stdenv, lib, python3
+{ stdenv
+, lib
+, python3
 , fetchFromGitHub
 , fetchPypi
 , git
 , spdx-license-list-data
-, version, src
+, version
+, src
 }:
 
 let

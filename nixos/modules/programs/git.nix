@@ -36,7 +36,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
-    environment.etc.gitconfig = mkIf (cfg.config != {}) {
+    environment.etc.gitconfig = mkIf (cfg.config != { }) {
       text = generators.toGitINI cfg.config;
     };
   };

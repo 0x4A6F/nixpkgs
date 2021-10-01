@@ -1,13 +1,30 @@
 { version, javaVersion, platforms }:
 
-{ stdenv, lib, fetchurl, autoPatchelfHook, setJavaClassPath, makeWrapper
-# minimum dependencies
-, Foundation, alsa-lib, fontconfig, freetype, glibc, openssl, perl, unzip, xorg
+{ stdenv
+, lib
+, fetchurl
+, autoPatchelfHook
+, setJavaClassPath
+, makeWrapper
+  # minimum dependencies
+, Foundation
+, alsa-lib
+, fontconfig
+, freetype
+, glibc
+, openssl
+, perl
+, unzip
+, xorg
 , zlib
-# runtime dependencies
+  # runtime dependencies
 , cups
-# runtime dependencies for GTK+ Look and Feel
-, gtkSupport ? true, cairo, glib, gtk3 }:
+  # runtime dependencies for GTK+ Look and Feel
+, gtkSupport ? true
+, cairo
+, glib
+, gtk3
+}:
 
 let
   platform = if stdenv.isDarwin then "darwin-amd64" else "linux-amd64";
@@ -268,4 +285,5 @@ let
       platforms = platforms;
     };
   };
-in graalvmXXX-ce
+in
+graalvmXXX-ce

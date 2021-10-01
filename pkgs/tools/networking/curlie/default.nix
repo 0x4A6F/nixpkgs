@@ -4,7 +4,7 @@ buildGoModule rec {
   pname = "curlie";
   version = "1.6.2";
 
-  src= fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "rs";
     repo = pname;
     rev = "v${version}";

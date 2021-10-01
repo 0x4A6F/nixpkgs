@@ -4,7 +4,9 @@ let
   drv = haskellPackages.vector;
   docs = pkgs.haskell.lib.documentationTarball drv;
 
-in pkgs.runCommand "test haskell.lib.documentationTarball" {
+in
+pkgs.runCommand "test haskell.lib.documentationTarball"
+{
   meta = {
     inherit (docs.meta) platforms;
   };

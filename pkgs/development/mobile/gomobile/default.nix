@@ -1,10 +1,18 @@
-{ stdenv, lib, fetchgit, buildGoModule, zlib, makeWrapper, xcodeenv, androidenv
+{ stdenv
+, lib
+, fetchgit
+, buildGoModule
+, zlib
+, makeWrapper
+, xcodeenv
+, androidenv
 , xcodeWrapperArgs ? { }
 , xcodeWrapper ? xcodeenv.composeXcodeWrapper xcodeWrapperArgs
 , androidPkgs ? androidenv.composeAndroidPackages {
     includeNDK = true;
     ndkVersion = "22.1.7171670";
-  } }:
+  }
+}:
 
 buildGoModule {
   pname = "gomobile";

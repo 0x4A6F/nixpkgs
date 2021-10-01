@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake ];
 
-  outputs = [ "out" "dev"];
+  outputs = [ "out" "dev" ];
 
   buildInputs = [ openssl ]; # s2n-config has find_dependency(LibCrypto).
 

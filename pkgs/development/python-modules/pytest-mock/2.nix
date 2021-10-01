@@ -20,7 +20,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = lib.optional (!isPy3k) mock;
 
   nativeBuildInputs = [
-   setuptools-scm
+    setuptools-scm
   ];
 
   checkInputs = [
@@ -33,8 +33,8 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Thin-wrapper around the mock package for easier use with py.test.";
-    homepage    = "https://github.com/pytest-dev/pytest-mock";
-    license     = licenses.mit;
+    homepage = "https://github.com/pytest-dev/pytest-mock";
+    license = licenses.mit;
     maintainers = with maintainers; [ ];
   };
 }

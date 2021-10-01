@@ -1,5 +1,12 @@
-{ lib, stdenv, fetchurl, pkg-config
-, alsa-lib, fftw, gsl, motif, xorg
+{ lib
+, stdenv
+, fetchurl
+, pkg-config
+, alsa-lib
+, fftw
+, gsl
+, motif
+, xorg
 }:
 
 stdenv.mkDerivation rec {

@@ -17,7 +17,7 @@ buildPythonPackage rec {
 
   checkInputs = [
     pyparsing
-  ] ;
+  ];
 
   # py2 likes to reorder tests
   doCheck = isPy3k;

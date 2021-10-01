@@ -1,47 +1,47 @@
-{lib, stdenv, fetchurl, aspell, which, writeScript}:
+{ lib, stdenv, fetchurl, aspell, which, writeScript }:
 
 with lib;
 
 /* HOWTO:
 
-   * Add some of these to your profile or systemPackages.
+  * Add some of these to your profile or systemPackages.
 
-     ~~~~
-     environment.systemPackages = [
-       aspell
-       aspellDicts.en
-       aspellDicts.en-computers
-       aspellDicts.en-science
-     ];
-     ~~~~
+  ~~~~
+  environment.systemPackages = [
+  aspell
+  aspellDicts.en
+  aspellDicts.en-computers
+  aspellDicts.en-science
+  ];
+  ~~~~
 
-   * Rebuild and switch to the new profile.
-   * Add something like
+  * Rebuild and switch to the new profile.
+  * Add something like
 
-     ~~~~
-     master en_US
-     extra-dicts en-computers.rws
-     add-extra-dicts en_US-science.rws
-     ~~~~
+  ~~~~
+  master en_US
+  extra-dicts en-computers.rws
+  add-extra-dicts en_US-science.rws
+  ~~~~
 
-     to `/etc/aspell.conf` or `~/.aspell.conf`.
-   * Check that `aspell -a` starts without errors.
-   * (optional) Check your config with `aspell dump config | grep -vE '^(#|$)'`.
-   * Enjoy.
+  to `/etc/aspell.conf` or `~/.aspell.conf`.
+  * Check that `aspell -a` starts without errors.
+  * (optional) Check your config with `aspell dump config | grep -vE '^(#|$)'`.
+  * Enjoy.
 
 */
 
 let
 
   /* Function to compile an Aspell dictionary.  Fortunately, they all
-     build in the exact same way. */
+    build in the exact same way. */
   buildDict =
-    {shortName, fullName, ...}@args:
+    { shortName, fullName, ... }@args:
 
     stdenv.mkDerivation ({
       name = "aspell-dict-${shortName}";
 
-      buildInputs = [aspell which];
+      buildInputs = [ aspell which ];
 
       dontAddPrefix = true;
 
@@ -50,12 +50,12 @@ let
       meta = {
         description = "Aspell dictionary for ${fullName}";
         platforms = lib.platforms.all;
-      } // (args.meta or {});
+      } // (args.meta or { });
     } // removeAttrs args [ "meta" ]);
 
 
   buildOfficialDict =
-    {language, version, filename, fullName, sha256, ...}@args:
+    { language, version, filename, fullName, sha256, ... }@args:
     let buildArgs = {
       shortName = "${language}-${version}";
 
@@ -65,8 +65,8 @@ let
       };
 
       /* Remove any instances of u-deva.cmap and u-deva.cset since
-         they are included in the main aspell package and can
-         cause conflicts otherwise. */
+        they are included in the main aspell package and can
+        cause conflicts otherwise. */
       postInstall = ''
         rm -f $out/lib/aspell/u-deva.{cmap,cset}
       '';
@@ -99,14 +99,14 @@ let
 
       meta = {
         homepage = "http://ftp.gnu.org/gnu/aspell/dict/0index.html";
-      } // (args.meta or {});
+      } // (args.meta or { });
 
     } // removeAttrs args [ "language" "filename" "sha256" "meta" ];
     in buildDict buildArgs;
 
   /* Function to compile txt dict files into Aspell dictionaries. */
   buildTxtDict =
-    {langInputs ? [], ...}@args:
+    { langInputs ? [ ], ... }@args:
     buildDict ({
       propagatedUserEnvPackages = langInputs;
 
@@ -156,7 +156,8 @@ let
       dontUnpack = true;
     } // args);
 
-in rec {
+in
+rec {
 
   ### Languages
 

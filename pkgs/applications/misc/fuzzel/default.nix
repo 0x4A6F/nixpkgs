@@ -15,7 +15,7 @@
 , enableCairo ? true
 , enablePNG ? true
 , enableSVG ? true
-# Optional dependencies
+  # Optional dependencies
 , cairo
 , librsvg
 , libpng
@@ -54,8 +54,8 @@ stdenv.mkDerivation rec {
     tllist
     fcft
   ] ++ lib.optional enableCairo cairo
-    ++ lib.optional enablePNG libpng
-    ++ lib.optional enableSVG librsvg;
+  ++ lib.optional enablePNG libpng
+  ++ lib.optional enableSVG librsvg;
 
   mesonBuildType = "release";
 

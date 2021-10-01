@@ -20,7 +20,8 @@ mkCoqDerivation {
     { case = isGe "8.11"; out = "1.7.3"; }
     { case = isGe "8.10"; out = "1.7.2"; }
     { case = isGe "8.9"; out = "1.7.1"; }
-  ] null;
+  ]
+    null;
 
   mlPlugin = true;
 

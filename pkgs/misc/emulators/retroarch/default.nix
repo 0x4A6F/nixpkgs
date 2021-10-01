@@ -1,6 +1,18 @@
-{ lib, stdenv, fetchFromGitHub, which, pkg-config, makeWrapper
-, ffmpeg, libGLU, libGL, freetype, libxml2, python3
-, libobjc, AppKit, Foundation
+{ lib
+, stdenv
+, fetchFromGitHub
+, which
+, pkg-config
+, makeWrapper
+, ffmpeg
+, libGLU
+, libGL
+, freetype
+, libxml2
+, python3
+, libobjc
+, AppKit
+, Foundation
 , alsa-lib ? null
 , libdrm ? null
 , libpulseaudio ? null
@@ -12,8 +24,10 @@
 , mesa ? null
 , SDL2 ? null
 , udev ? null
-, enableNvidiaCgToolkit ? false, nvidia_cg_toolkit ? null
-, withVulkan ? stdenv.isLinux, vulkan-loader ? null
+, enableNvidiaCgToolkit ? false
+, nvidia_cg_toolkit ? null
+, withVulkan ? stdenv.isLinux
+, vulkan-loader ? null
 , fetchurl
 , wayland
 , libxkbcommon
@@ -33,15 +47,26 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkg-config wayland ]
-                      ++ optional withVulkan makeWrapper;
+    ++ optional withVulkan makeWrapper;
 
   buildInputs = [ ffmpeg freetype libxml2 libGLU libGL python3 SDL2 which ]
-                ++ optional enableNvidiaCgToolkit nvidia_cg_toolkit
-                ++ optional withVulkan vulkan-loader
-                ++ optionals stdenv.isDarwin [ libobjc AppKit Foundation ]
-                ++ optionals stdenv.isLinux [ alsa-lib libdrm libpulseaudio libv4l libX11
-                                              libXdmcp libXext libXxf86vm mesa udev
-                                              wayland libxkbcommon ];
+    ++ optional enableNvidiaCgToolkit nvidia_cg_toolkit
+    ++ optional withVulkan vulkan-loader
+    ++ optionals stdenv.isDarwin [ libobjc AppKit Foundation ]
+    ++ optionals stdenv.isLinux [
+    alsa-lib
+    libdrm
+    libpulseaudio
+    libv4l
+    libX11
+    libXdmcp
+    libXext
+    libXxf86vm
+    mesa
+    udev
+    wayland
+    libxkbcommon
+  ];
 
   enableParallelBuilding = true;
 

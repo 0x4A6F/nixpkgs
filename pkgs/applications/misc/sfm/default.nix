@@ -11,9 +11,9 @@ stdenv.mkDerivation rec {
     hash = "sha256-NmafUezwKK9bYPAWDNhegyjqkb4GY/i1WEtQ9puIaig=";
   };
 
-  configFile = lib.optionalString (conf!=null) (writeText "config.def.h" conf);
+  configFile = lib.optionalString (conf != null) (writeText "config.def.h" conf);
 
-  postPatch = lib.optionalString (conf!=null) "cp ${configFile} config.def.h";
+  postPatch = lib.optionalString (conf != null) "cp ${configFile} config.def.h";
 
   installFlags = [ "PREFIX=$(out)" ];
 

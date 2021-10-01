@@ -6,7 +6,7 @@ buildGoModule rec {
 
   src = fetchFromGitHub {
     owner = "zcash";
-    repo  = "lightwalletd";
+    repo = "lightwalletd";
     rev = "v${version}";
     sha256 = "0dwam3fhc4caga7kjg6cc06sz47g4ii7n3sa4j2ac4aiy21hsbjk";
   };
@@ -14,7 +14,8 @@ buildGoModule rec {
   vendorSha256 = null;
 
   ldflags = [
-    "-s" "-w"
+    "-s"
+    "-w"
     "-X github.com/zcash/lightwalletd/common.Version=v${version}"
     "-X github.com/zcash/lightwalletd/common.GitCommit=v${version}"
     "-X github.com/zcash/lightwalletd/common.BuildDate=1970-01-01"

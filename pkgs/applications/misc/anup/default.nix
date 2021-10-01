@@ -1,4 +1,4 @@
-{ lib, rustPlatform, fetchFromGitHub, sqlite, xdg-utils}:
+{ lib, rustPlatform, fetchFromGitHub, sqlite, xdg-utils }:
 
 rustPlatform.buildRustPackage rec {
   pname = "anup";

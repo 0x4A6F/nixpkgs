@@ -1,5 +1,13 @@
-{ lib, fetchpatch, fetchFromGitHub, buildPythonPackage, isPy3k,
-isodate, lxml, xmlsec, freezegun }:
+{ lib
+, fetchpatch
+, fetchFromGitHub
+, buildPythonPackage
+, isPy3k
+, isodate
+, lxml
+, xmlsec
+, freezegun
+}:
 
 buildPythonPackage rec {
   pname = "python3-saml";
@@ -32,7 +40,9 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
-    isodate lxml xmlsec
+    isodate
+    lxml
+    xmlsec
   ];
 
   checkInputs = [ freezegun ];

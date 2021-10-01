@@ -1,6 +1,22 @@
-{ stdenv, lib, substituteAll, fetchPypi, buildPythonPackage, python, pkg-config, libX11
-, SDL2, SDL2_image, SDL2_mixer, SDL2_ttf, libpng, libjpeg, portmidi, freetype, fontconfig
-, AppKit, CoreMIDI
+{ stdenv
+, lib
+, substituteAll
+, fetchPypi
+, buildPythonPackage
+, python
+, pkg-config
+, libX11
+, SDL2
+, SDL2_image
+, SDL2_mixer
+, SDL2_ttf
+, libpng
+, libjpeg
+, portmidi
+, freetype
+, fontconfig
+, AppKit
+, CoreMIDI
 }:
 
 buildPythonPackage rec {
@@ -16,14 +32,18 @@ buildPythonPackage rec {
     # Patch pygame's dependency resolution to let it find build inputs
     (substituteAll {
       src = ./fix-dependency-finding.patch;
-      buildinputs_include = builtins.toJSON (builtins.concatMap (dep: [
-        "${lib.getDev dep}/"
-        "${lib.getDev dep}/include"
-      ]) buildInputs);
-      buildinputs_lib = builtins.toJSON (builtins.concatMap (dep: [
-        "${lib.getLib dep}/"
-        "${lib.getLib dep}/lib"
-      ]) buildInputs);
+      buildinputs_include = builtins.toJSON (builtins.concatMap
+        (dep: [
+          "${lib.getDev dep}/"
+          "${lib.getDev dep}/include"
+        ])
+        buildInputs);
+      buildinputs_lib = builtins.toJSON (builtins.concatMap
+        (dep: [
+          "${lib.getLib dep}/"
+          "${lib.getLib dep}/lib"
+        ])
+        buildInputs);
     })
   ];
 
@@ -34,14 +54,23 @@ buildPythonPackage rec {
   '';
 
   nativeBuildInputs = [
-    pkg-config SDL2
+    pkg-config
+    SDL2
   ];
 
   buildInputs = [
-    SDL2 SDL2_image SDL2_mixer SDL2_ttf libpng libjpeg
-    portmidi libX11 freetype
+    SDL2
+    SDL2_image
+    SDL2_mixer
+    SDL2_ttf
+    libpng
+    libjpeg
+    portmidi
+    libX11
+    freetype
   ] ++ lib.optionals stdenv.isDarwin [
-    AppKit CoreMIDI
+    AppKit
+    CoreMIDI
   ];
 
   preConfigure = ''

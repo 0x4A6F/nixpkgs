@@ -7,7 +7,7 @@
 , makeWrapper
 , nixosTests
 
-# For the update script
+  # For the update script
 , coreutils
 , nix-prefetch-git
 , jq

@@ -1,7 +1,26 @@
-{ lib, stdenv, fetchFromGitHub, buildGoModule, makeWrapper, runCommand
-, moreutils, jq, git, zip, rsync, pkg-config, yarn, python3
-, nodejs-14_x, libsecret, xorg, ripgrep
-, AppKit, Cocoa, Security, cctools }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, buildGoModule
+, makeWrapper
+, runCommand
+, moreutils
+, jq
+, git
+, zip
+, rsync
+, pkg-config
+, yarn
+, python3
+, nodejs-14_x
+, libsecret
+, xorg
+, ripgrep
+, AppKit
+, Cocoa
+, Security
+, cctools
+}:
 
 let
   system = stdenv.hostPlatform.system;
@@ -9,9 +28,10 @@ let
   nodejs = nodejs-14_x;
   python = python3;
   yarn' = yarn.override { inherit nodejs; };
-  defaultYarnOpts = [ "frozen-lockfile" "non-interactive" "no-progress"];
+  defaultYarnOpts = [ "frozen-lockfile" "non-interactive" "no-progress" ];
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "code-server";
   version = "3.9.0";
   commit = "fc6d123da59a4e5a675ac8e080f66e032ba01a1b";
@@ -69,19 +89,31 @@ in stdenv.mkDerivation rec {
 
   # Extract the Node.js source code which is used to compile packages with
   # native bindings
-  nodeSources = runCommand "node-sources" {} ''
+  nodeSources = runCommand "node-sources" { } ''
     tar --no-same-owner --no-same-permissions -xf ${nodejs.src}
     mv node-* $out
   '';
 
   nativeBuildInputs = [
-    nodejs yarn' python pkg-config zip makeWrapper git rsync jq moreutils
+    nodejs
+    yarn'
+    python
+    pkg-config
+    zip
+    makeWrapper
+    git
+    rsync
+    jq
+    moreutils
   ];
   buildInputs = lib.optionals (!stdenv.isDarwin) [ libsecret ]
     ++ (with xorg; [ libX11 libxkbfile ])
     ++ lib.optionals stdenv.isDarwin [
-      AppKit Cocoa Security cctools
-    ];
+    AppKit
+    Cocoa
+    Security
+    cctools
+  ];
 
   patches = [
     # remove download of coder-cloud agent

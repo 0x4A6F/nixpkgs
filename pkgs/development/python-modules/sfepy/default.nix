@@ -22,7 +22,7 @@ buildPythonPackage rec {
   disabled = pythonOlder "3.8";
 
   src = fetchurl {
-    url="https://github.com/sfepy/sfepy/archive/release_${version}.tar.gz";
+    url = "https://github.com/sfepy/sfepy/archive/release_${version}.tar.gz";
     sha256 = "1vnynxzbspj900wjyy6020l71jdv2l1wkyax7nhi6w5wvav4kfwz";
   };
 

@@ -1,5 +1,17 @@
-{ lib, stdenv, fetchFromGitHub, nodejs-14_x, python3, callPackage
-, fixup_yarn_lock, yarn, pkg-config, libsecret, xcbuild, Security, AppKit }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, nodejs-14_x
+, python3
+, callPackage
+, fixup_yarn_lock
+, yarn
+, pkg-config
+, libsecret
+, xcbuild
+, Security
+, AppKit
+}:
 
 stdenv.mkDerivation rec {
   pname = "keytar";
@@ -13,13 +25,13 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ nodejs-14_x python3 yarn pkg-config ]
-    ++ lib.optional  stdenv.isDarwin xcbuild;
+    ++ lib.optional stdenv.isDarwin xcbuild;
   buildInputs = lib.optionals (!stdenv.isDarwin) [ libsecret ]
     ++ lib.optionals stdenv.isDarwin [ Security AppKit ];
 
   npm_config_nodedir = nodejs-14_x;
 
-  yarnOfflineCache = (callPackage ./yarn.nix {}).offline_cache;
+  yarnOfflineCache = (callPackage ./yarn.nix { }).offline_cache;
 
   buildPhase = ''
     cp ${./yarn.lock} ./yarn.lock

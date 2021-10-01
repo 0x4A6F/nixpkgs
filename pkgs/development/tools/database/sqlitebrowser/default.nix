@@ -1,5 +1,12 @@
-{ mkDerivation, lib, fetchFromGitHub, cmake
-, qtbase, qttools, sqlite, wrapGAppsHook }:
+{ mkDerivation
+, lib
+, fetchFromGitHub
+, cmake
+, qtbase
+, qttools
+, sqlite
+, wrapGAppsHook
+}:
 
 mkDerivation rec {
   pname = "sqlitebrowser";

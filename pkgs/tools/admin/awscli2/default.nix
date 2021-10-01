@@ -18,7 +18,7 @@ let
           rev = "afa015418df6b3aeef0f5645e8704de64adea3d7";
           sha256 = "sha256-ypqDhCQXPqG8JCsLWt1V/4s95Hm+lClz+eOA2GnIhYg=";
         };
-        propagatedBuildInputs = super.botocore.propagatedBuildInputs ++ [py.pkgs.awscrt];
+        propagatedBuildInputs = super.botocore.propagatedBuildInputs ++ [ py.pkgs.awscrt ];
       });
       prompt-toolkit = super.prompt-toolkit.overridePythonAttrs (oldAttrs: rec {
         version = "2.0.10";

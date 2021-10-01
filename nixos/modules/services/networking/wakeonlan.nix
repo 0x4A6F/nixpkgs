@@ -7,10 +7,10 @@ let
 
   ethtool = "${pkgs.ethtool}/sbin/ethtool";
 
-  passwordParameter = password : if (password == "") then "" else
-    "sopass ${password}";
+  passwordParameter = password: if (password == "") then "" else
+  "sopass ${password}";
 
-  methodParameter = {method, password} :
+  methodParameter = { method, password }:
     if method == "magicpacket" then "wol g"
     else if method == "password" then "wol s so ${passwordParameter password}"
     else throw "Wake-On-Lan method not supported";
@@ -31,20 +31,22 @@ in
 
     services.wakeonlan.interfaces = mkOption {
       default = [ ];
-      type = types.listOf (types.submodule { options = {
-        interface = mkOption {
-          type = types.str;
-          description = "Interface to enable for Wake-On-Lan.";
+      type = types.listOf (types.submodule {
+        options = {
+          interface = mkOption {
+            type = types.str;
+            description = "Interface to enable for Wake-On-Lan.";
+          };
+          method = mkOption {
+            type = types.enum [ "magicpacket" "password" ];
+            description = "Wake-On-Lan method for this interface.";
+          };
+          password = mkOption {
+            type = types.strMatching "[a-fA-F0-9]{2}:([a-fA-F0-9]{2}:){4}[a-fA-F0-9]{2}";
+            description = "The password has the shape of six bytes in hexadecimal separated by a colon each.";
+          };
         };
-        method = mkOption {
-          type = types.enum [ "magicpacket" "password"];
-          description = "Wake-On-Lan method for this interface.";
-        };
-        password = mkOption {
-          type = types.strMatching "[a-fA-F0-9]{2}:([a-fA-F0-9]{2}:){4}[a-fA-F0-9]{2}";
-          description = "The password has the shape of six bytes in hexadecimal separated by a colon each.";
-        };
-      };});
+      });
       example = [
         {
           interface = "eth0";

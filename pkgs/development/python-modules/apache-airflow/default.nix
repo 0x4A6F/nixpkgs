@@ -203,17 +203,17 @@ buildPythonPackage rec {
   makeWrapperArgs = [ "--prefix PYTHONPATH : $PYTHONPATH" ];
 
   checkPhase = ''
-   export HOME=$(mktemp -d)
-   export AIRFLOW_HOME=$HOME
-   export AIRFLOW__CORE__UNIT_TEST_MODE=True
-   export AIRFLOW_DB="$HOME/airflow.db"
-   export PATH=$PATH:$out/bin
+    export HOME=$(mktemp -d)
+    export AIRFLOW_HOME=$HOME
+    export AIRFLOW__CORE__UNIT_TEST_MODE=True
+    export AIRFLOW_DB="$HOME/airflow.db"
+    export PATH=$PATH:$out/bin
 
-   airflow version
-   airflow db init
-   airflow db reset -y
+    airflow version
+    airflow db init
+    airflow db reset -y
 
-   pytest tests/core/test_core.py
+    pytest tests/core/test_core.py
   '';
 
   postInstall = ''

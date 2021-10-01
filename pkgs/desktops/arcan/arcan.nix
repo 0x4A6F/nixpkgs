@@ -36,7 +36,8 @@
 , xcbutil
 , xcbutilwm
 , xz
-, buildManPages ? true, ruby
+, buildManPages ? true
+, ruby
 }:
 
 let

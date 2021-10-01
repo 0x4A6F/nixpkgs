@@ -1,6 +1,23 @@
-{ stdenv, fetchzip, jam, unzip, libX11, libXxf86vm, libXrandr, libXinerama
-, libXrender, libXext, libtiff, libjpeg, libpng, libXScrnSaver, writeText
-, libXdmcp, libXau, lib, openssl }:
+{ stdenv
+, fetchzip
+, jam
+, unzip
+, libX11
+, libXxf86vm
+, libXrandr
+, libXinerama
+, libXrender
+, libXext
+, libtiff
+, libjpeg
+, libpng
+, libXScrnSaver
+, writeText
+, libXdmcp
+, libXau
+, lib
+, openssl
+}:
 
 stdenv.mkDerivation rec {
   pname = "argyllcms";
@@ -53,7 +70,7 @@ stdenv.mkDerivation rec {
     USE_LIBUSB = false ;
 
     # Compile in graph plotting code (Not fully implemented)
-    USE_PLOT = true ;		# [true]
+    USE_PLOT = true ;    # [true]
 
     JPEGLIB = ;
     JPEGINC = ;
@@ -93,8 +110,19 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [
-    libtiff libjpeg libpng libX11 libXxf86vm libXrandr libXinerama libXext
-    libXrender libXScrnSaver libXdmcp libXau openssl
+    libtiff
+    libjpeg
+    libpng
+    libX11
+    libXxf86vm
+    libXrandr
+    libXinerama
+    libXext
+    libXrender
+    libXScrnSaver
+    libXdmcp
+    libXau
+    openssl
   ];
 
   buildFlags = [ "all" ];
@@ -116,7 +144,7 @@ stdenv.mkDerivation rec {
     homepage = "http://www.argyllcms.com";
     description = "Color management system (compatible with ICC)";
     license = licenses.gpl3;
-    maintainers = [];
+    maintainers = [ ];
     platforms = platforms.linux;
   };
 }

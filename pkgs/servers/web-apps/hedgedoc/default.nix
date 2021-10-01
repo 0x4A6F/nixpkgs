@@ -33,9 +33,9 @@ mkYarnPackage rec {
   version = "1.9.0";
 
   src = fetchFromGitHub {
-    owner  = "hedgedoc";
-    repo   = "hedgedoc";
-    rev    = version;
+    owner = "hedgedoc";
+    repo = "hedgedoc";
+    rev = version;
     sha256 = "sha256-hSKQGkI1+68Zf05RhgRKZo47buyobzjhURSZ30/h0PA=";
   };
 

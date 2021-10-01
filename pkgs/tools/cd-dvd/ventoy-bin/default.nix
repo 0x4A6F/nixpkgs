@@ -1,6 +1,17 @@
-{ lib, stdenv, fetchurl, fetchpatch
-, autoPatchelfHook, makeWrapper
-, hexdump, exfat, dosfstools, e2fsprogs, xz, util-linux, bash, parted
+{ lib
+, stdenv
+, fetchurl
+, fetchpatch
+, autoPatchelfHook
+, makeWrapper
+, hexdump
+, exfat
+, dosfstools
+, e2fsprogs
+, xz
+, util-linux
+, bash
+, parted
 }:
 
 let arch = {
@@ -9,7 +20,8 @@ let arch = {
   aarch64-linux = "aarch64";
   mipsel-linux = "mips64el";
 }.${stdenv.hostPlatform.system} or (throw "Unsupported platform ${stdenv.hostPlatform.system}");
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "ventoy-bin";
   version = "1.0.51";
 

@@ -1,5 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, linkFarmFromDrvs, makeWrapper, autoPatchelfHook
-, dotnet-sdk_5, dotnetPackages, dotnetCorePackages, cacert
+{ lib
+, stdenv
+, fetchFromGitHub
+, fetchurl
+, linkFarmFromDrvs
+, makeWrapper
+, autoPatchelfHook
+, dotnet-sdk_5
+, dotnetPackages
+, dotnetCorePackages
+, cacert
 }:
 
 let

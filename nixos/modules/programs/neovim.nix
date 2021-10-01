@@ -9,7 +9,8 @@ let
 
   runtime = pkgs.linkFarm "neovim-runtime" (map (x: { name = x.target; path = x.source; }) runtime');
 
-in {
+in
+{
   options.programs.neovim = {
     enable = mkEnableOption "Neovim";
 
@@ -46,7 +47,7 @@ in {
 
     configure = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       example = literalExample ''
         configure = {
             customRC = $''''
@@ -81,7 +82,7 @@ in {
     };
 
     runtime = mkOption {
-      default = {};
+      default = { };
       example = literalExample ''
         runtime."ftplugin/c.vim".text = "setlocal omnifunc=v:lua.vim.lsp.omnifunc";
       '';
@@ -91,7 +92,8 @@ in {
 
       type = with types; attrsOf (submodule (
         { name, config, ... }:
-        { options = {
+        {
+          options = {
 
             enable = mkOption {
               type = types.bool;
@@ -127,10 +129,12 @@ in {
             target = mkDefault name;
             source = mkIf (config.text != null) (
               let name' = "neovim-runtime" + baseNameOf name;
-              in mkDefault (pkgs.writeText name' config.text));
+              in mkDefault (pkgs.writeText name' config.text)
+            );
           };
 
-        }));
+        }
+      ));
 
     };
   };

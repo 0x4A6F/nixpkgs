@@ -1,8 +1,13 @@
-{ buildPythonPackage, fetchFromGitHub, lib
-# propagatedBuildInputs
-, absl-py, numpy, opt-einsum
-# checkInputs
-, jaxlib, pytestCheckHook
+{ buildPythonPackage
+, fetchFromGitHub
+, lib
+  # propagatedBuildInputs
+, absl-py
+, numpy
+, opt-einsum
+  # checkInputs
+, jaxlib
+, pytestCheckHook
 }:
 
 buildPythonPackage rec {
@@ -32,8 +37,8 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Differentiate, compile, and transform Numpy code";
-    homepage    = "https://github.com/google/jax";
-    license     = licenses.asl20;
+    homepage = "https://github.com/google/jax";
+    license = licenses.asl20;
     maintainers = with maintainers; [ samuela ];
   };
 }

@@ -24,7 +24,8 @@ mkCoqDerivation {
     { case = "8.7"; out = "8.7.0"; }
     { case = "8.6"; out = "8.6.0"; }
     { case = "8.5"; out = "8.5.0"; }
-  ] null;
+  ]
+    null;
 
   useDune2ifVersion = versions.isGe "9.0";
 

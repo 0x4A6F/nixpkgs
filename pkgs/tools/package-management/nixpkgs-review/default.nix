@@ -17,7 +17,10 @@ python3.pkgs.buildPythonApplication rec {
   };
 
   makeWrapperArgs = [
-    "--prefix" "PATH" ":" "${lib.makeBinPath [ nixUnstable git ]}"
+    "--prefix"
+    "PATH"
+    ":"
+    "${lib.makeBinPath [ nixUnstable git ]}"
   ];
 
   doCheck = false;
