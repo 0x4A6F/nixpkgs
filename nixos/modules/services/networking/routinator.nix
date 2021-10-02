@@ -107,6 +107,10 @@ in
         Type = "oneshot";
         User = "routinator";
         Group = "routinator";
+        AmbientCapabilities = [
+          "CAP_NET_RAW"          # to send ICMP messages
+          "CAP_NET_BIND_SERVICE" # to bind on DHCP port (67)
+        ];
         WorkingDirectory = "/var/lib/routinator";
       # DynamicUser = "yes";
         RuntimeDirectory = "routinator";
