@@ -797,6 +797,8 @@ with pkgs;
 
   alsaequal = callPackage ../tools/audio/alsaequal { };
 
+  alquitran = callPackage ../tools/archivers/alquitran { };
+
   acpica-tools = callPackage ../tools/system/acpica-tools { };
 
   act = callPackage ../development/tools/misc/act { };
