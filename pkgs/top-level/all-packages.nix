@@ -6532,6 +6532,8 @@ with pkgs;
 
   ipcalc = callPackage ../tools/networking/ipcalc {};
 
+  netmaker = callPackage ../tools/networking/netmaker { };
+
   netmask = callPackage ../tools/networking/netmask {};
 
   netifd = callPackage ../tools/networking/netifd {};
