@@ -2724,6 +2724,8 @@ with pkgs;
 
   dasel = callPackage ../applications/misc/dasel { };
 
+  itd = callPackage ../applications/misc/itd { };
+
   dasher = callPackage ../applications/accessibility/dasher { };
 
   datamash = callPackage ../tools/misc/datamash { };
