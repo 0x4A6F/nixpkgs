@@ -22,6 +22,13 @@ stdenv.mkDerivation rec {
     hash = "sha256-/9GVvVZ9uv/DuYsj/QCq0FN2gMmJYXHkT+P/eeKKwz0=";
   };
 
+  patches = [
+    (fetchurl {
+      urls = [ "https://gitlab.inria.fr/mpfr/mpfr/-/commit/3cd39bc0b71ad2fb2ab5252ad9268b14603e3ce6.patch" ];
+      sha256 = "sha256-OXwzVdZayE4vmB7CrOx7LgmjrUx3OwuGsfqgQB3PwO4=";
+    })
+  ];
+
   outputs = [ "out" "dev" "doc" "info" ];
 
   strictDeps = true;
