@@ -308,11 +308,24 @@ in
               User = cfg.user;
               Group = cfg.group;
               ExecStart = "${cfg.package}/bin/cloudflared tunnel --config=${mkConfigFile} --no-autoupdate run";
+              AmbientCapabilities = "cap_net_raw,cap_net_admin=eip";
+              #  mkIf (
+              #    cfg.proxy... ||
+              #    cfg.proxy-port < 1024
+              #    )
+              #    "cap_net_raw,cap_net_bind_service";
               Restart = "always";
             };
           })
         )
         config.services.cloudflared.tunnels;
+
+    security.wrappers.cloudflared = mkIf cfg.enable {
+      source = "${pkgs.cloudflared}/bin/cloudflared";
+      capabilities = "cap_net_raw,cap_net_admin=eip";
+      owner = cfg.user;
+      group = cfg.group;
+    };
 
     users.users = mkIf (cfg.user == "cloudflared") {
       cloudflared = {
