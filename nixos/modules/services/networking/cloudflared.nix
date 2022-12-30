@@ -302,7 +302,7 @@ in
             mkConfigFile = pkgs.writeText "cloudflared.yml" (builtins.toJSON fullConfig);
           in
           nameValuePair "cloudflared-tunnel-${name}" ({
-            after = [ "network.target" ];
+            after = [ "network-online.target" ];
             wantedBy = [ "multi-user.target" ];
             serviceConfig = {
               User = cfg.user;
