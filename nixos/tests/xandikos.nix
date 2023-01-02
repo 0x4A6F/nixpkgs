@@ -7,12 +7,12 @@ import ./make-test-python.nix (
       meta.maintainers = with lib.maintainers; [ _0x4A6F ];
 
       nodes = {
-        xandikos_client = {};
-        xandikos_default = {
+        xandikosClient = {};
+        xandikosDefault = {
           networking.firewall.allowedTCPPorts = [ 8080 ];
           services.xandikos.enable = true;
         };
-        xandikos_proxy = {
+        xandikosProxy = {
           networking.firewall.allowedTCPPorts = [ 80 8080 ];
           services.xandikos.enable = true;
           services.xandikos.address = "localhost";
@@ -39,31 +39,31 @@ import ./make-test-python.nix (
         start_all()
 
         with subtest("Xandikos default"):
-            xandikos_default.wait_for_unit("multi-user.target")
-            xandikos_default.wait_for_unit("xandikos.service")
-            xandikos_default.wait_for_open_port(8080)
-            xandikos_default.succeed("curl --fail http://localhost:8080/")
-            xandikos_default.succeed(
+            xandikosDefault.wait_for_unit("multi-user.target")
+            xandikosDefault.wait_for_unit("xandikos.service")
+            xandikosDefault.wait_for_open_port(8080)
+            xandikosDefault.succeed("curl --fail http://localhost:8080/")
+            xandikosDefault.succeed(
                 "curl -s --fail --location http://localhost:8080/ | grep -i Xandikos"
             )
-            xandikos_client.wait_for_unit("network.target")
-            xandikos_client.fail("curl --fail http://xandikos_default:8080/")
+            xandikosClient.wait_for_unit("network-online.target")
+            xandikosClient.fail("curl --fail http://xandikosDefault:8080/")
 
         with subtest("Xandikos proxy"):
-            xandikos_proxy.wait_for_unit("multi-user.target")
-            xandikos_proxy.wait_for_unit("xandikos.service")
-            xandikos_proxy.wait_for_open_port(8080)
-            xandikos_proxy.succeed("curl --fail http://localhost:8080/")
-            xandikos_proxy.succeed(
+            xandikosProxy.wait_for_unit("multi-user.target")
+            xandikosProxy.wait_for_unit("xandikos.service")
+            xandikosProxy.wait_for_open_port(8080)
+            xandikosProxy.succeed("curl --fail http://localhost:8080/")
+            xandikosProxy.succeed(
                 "curl -s --fail --location http://localhost:8080/ | grep -i Xandikos"
             )
-            xandikos_client.wait_for_unit("network.target")
-            xandikos_client.fail("curl --fail http://xandikos_proxy:8080/")
-            xandikos_client.succeed(
-                "curl -s --fail -u xandikos:snakeOilPassword -H 'Host: xandikos.local' http://xandikos_proxy/xandikos/ | grep -i Xandikos"
+            xandikosClient.wait_for_unit("network-online.target")
+            xandikosClient.fail("curl --fail http://xandikosProxy:8080/")
+            xandikosClient.succeed(
+                "curl -s --fail -u xandikos:snakeOilPassword -H 'Host: xandikos.local' http://xandikosProxy/xandikos/ | grep -i Xandikos"
             )
-            xandikos_client.succeed(
-                "curl -s --fail -u xandikos:snakeOilPassword -H 'Host: xandikos.local' http://xandikos_proxy/xandikos/user/ | grep -i Xandikos"
+            xandikosClient.succeed(
+                "curl -s --fail -u xandikos:snakeOilPassword -H 'Host: xandikos.local' http://xandikosProxy/xandikos/user/ | grep -i Xandikos"
             )
       '';
     }
