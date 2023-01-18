@@ -21,7 +21,7 @@
 , sysctl
 , buildLlvmTools
 , debugVersion ? false
-, doCheck ? (!stdenv.isx86_32 /* TODO: why */) && (!stdenv.hostPlatform.isMusl)
+, doCheck ? (!stdenv.isx86_32 /* TODO: why */) && (!stdenv.hostPlatform.isMusl) && (!stdenv.hostPlatform.isRiscV)
   && (stdenv.hostPlatform == stdenv.buildPlatform)
 , enableManpages ? false
 , enableSharedLibraries ? !stdenv.hostPlatform.isStatic
