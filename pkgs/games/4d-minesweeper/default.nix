@@ -21,8 +21,15 @@
 , libglvnd
 , libpulseaudio
 , zlib
+, udev
 }:
 
+let
+  preset =
+    if stdenv.isLinux then "Linux/X11"
+    else if stdenv.isDarwin then "Mac OSX"
+    else throw "unsupported platform";
+in
 
 stdenv.mkDerivation rec {
   pname = "4D-Minesweeper";
@@ -30,7 +37,7 @@ stdenv.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "gapophustu";
-    repo = pname;
+    repo = "4D-Minesweeper";
     rev = "db176d8aa5981a597bbae6a1a74aeebf0f376df4";
     sha256 = "sha256-A5QKqCo9TTdzmK13WRSAfkrkeUqHc4yQCzy4ZZ9uX2M=";
   };
@@ -42,9 +49,15 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    # determine buildInputs vs runtimeDependencies
+    #alsa-lib
+    #gcc-unwrapped.lib
+    #git
+    #zlib
+  ];
+
+  runtimeDependencies = map lib.getLib [
     alsa-lib
-    gcc-unwrapped.lib
-    git
     libGLU
     libX11
     libXcursor
@@ -56,7 +69,7 @@ stdenv.mkDerivation rec {
     libXrender
     libglvnd
     libpulseaudio
-    zlib
+    udev
   ];
 
   buildPhase = ''
@@ -71,20 +84,56 @@ stdenv.mkDerivation rec {
     mkdir -p $HOME/.local/share/godot
     ln -s ${godot3-export-templates}/share/godot/templates $HOME/.local/share/godot
 
-    mkdir -p $out/bindontInstall = true;
-    cd source/
-    godot3-headless --export "Linux/X11" $out/bin/4d-minesweeper
+    mkdir -p $out/share/4d-minesweeper
+    godot3-headless --export "${preset}" --path source $out/share/4d-minesweeper/4d-minesweeper
 
     runHook postBuild
   '';
 
   installPhase = ''
-    mkdir -p $out/icons/hicolor/48x48/apps/
-    cp source/icon.svg $out/icons/hicolor/48x48/apps/
+    runHook preInstall
+
+    mkdir -p $out/icons/hicolor/scalable/apps/
+    install -Dm644 source/icon.svg $out/icons/hicolor/scalable/apps/
+
+    mkdir -p $out/bin
+    ln -s $out/share/4d-minesweeper/4d-minesweeper $out/bin
+
+    # Patch binaries.
+    interpreter=$(cat $NIX_CC/nix-support/dynamic-linker)
+    patchelf \
+      --set-interpreter $interpreter \
+      --set-rpath ${lib.makeLibraryPath runtimeDependencies} \
+      $out/bin/4d-minesweeper
+
+    runHook postInstall
   '';
 
+  # otherwise godot doesn't find runtimeDependencies
   dontFixup = true;
-  dontStrip = true;
+
+  # TODO: why is this done?
+  #dontStrip = true;
+
+  # TODO: determine failures in --verbose mode
+  # XcursorGetTheme could not get cursor theme
+  # Failed loading custom cursor: left_ptr
+  # Failed loading custom cursor: xterm
+  # Failed loading custom cursor: hand2
+  # Failed loading custom cursor: cross
+  # Failed loading custom cursor: watch
+  # Failed loading custom cursor: left_ptr_watch
+  # Failed loading custom cursor: fleur
+  # Failed loading custom cursor: hand1
+  # Failed loading custom cursor: X_cursor
+  # Failed loading custom cursor: sb_v_double_arrow
+  # Failed loading custom cursor: sb_h_double_arrow
+  # Failed loading custom cursor: size_bdiag
+  # Failed loading custom cursor: size_fdiag
+  # Failed loading custom cursor: hand1
+  # Failed loading custom cursor: sb_v_double_arrow
+  # Failed loading custom cursor: sb_h_double_arrow
+  # Failed loading custom cursor: question_arrow
 
   desktopItems = [
     (makeDesktopItem {
