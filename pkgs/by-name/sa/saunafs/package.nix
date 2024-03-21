@@ -2,52 +2,11 @@
 , stdenv
 , fetchFromGitHub
 , cmake
-, acl
-, asciidoc
-, attr
-, bc
-, build-essential
-, ca-certificates-java
-, ccache
-, curl
-, debhelper
-, devscripts
+, fmt_10
+, spdlog
+, yaml-cpp
 , fuse3
-, git
-, libblkid-dev
-, libboost-filesystem-dev
-, libboost-iostreams-dev
-, libboost-program-options-dev
-, libboost-system-dev
-, libcrcutil-dev
-, libdb-dev
-, fmt_10 # -> ibfmt-dev
-, libfuse3-dev
-, libgoogle-perftools-dev
-, libgtest-dev
-, libisal-dev
-, libjudy-dev
-, libpam0g-dev
-, libspdlog-dev
-, libsystemd-dev
-, liburcu-dev
-, libyaml-cpp-dev
-, lsb-release
-, netcat-openbsd
-, nfs4-acl-tools
-, pkg-config
-, pylint
-, python3
-, python3-pip
-, rsync
-, socat
-, sudo
-, tidy
-, time
-, uuid-dev
-, valgrind
-, wget
-, zlib1g-dev
+, boost175
 }:
 
 stdenv.mkDerivation rec {
@@ -63,6 +22,11 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    fmt_10
+    spdlog
+    yaml-cpp
+    fuse3
+    boost175
   ];
 
   meta = with lib; {
