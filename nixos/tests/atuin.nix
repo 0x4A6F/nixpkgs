@@ -62,5 +62,8 @@ in
 
     # check for test record
     client.succeed("ATUIN_SESSION=$(${atuin}/bin/atuin uuid) ${atuin}/bin/atuin history list | grep shazbot")
+
+    # check security restrictions
+    server.log(server.succeed("systemd-analyze security atuin.service | grep -v ✓"))
   '';
 })
