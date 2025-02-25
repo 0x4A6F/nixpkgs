@@ -7,6 +7,8 @@
   zlib,
   libbpf,
   clangStdenv,
+  testers,
+  bpftop,
 }:
 let
   pname = "bpftop";
@@ -47,4 +49,11 @@ rustPlatform.buildRustPackage.override { stdenv = clangStdenv; } {
     ];
     mainProgram = "bpftop";
   };
+
+  passthru.tests.version = testers.testVersion {
+    package = bpftop;
+    command = "bpftop --version";
+    version = "${version}";
+  };
+
 }
