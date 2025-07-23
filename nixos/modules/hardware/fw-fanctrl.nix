@@ -119,6 +119,50 @@ in
     # Create suspend config
     environment.etc."systemd/system-sleep/fw-fanctrl-suspend.sh".source =
       "${pkgs.fw-fanctrl}/share/fw-fanctrl/fw-fanctrl-suspend";
+
+    assertions = [
+      {
+        assertion = cfg.config.strategies != null;
+        message = ''
+          Option `config.strategies` can be set `{ }` (default) or a custom strategy:
+            ```
+            strategies = {
+              "custom" = {
+                "fanSpeedUpdateFrequency" = 5;
+                "movingAverageInterval" = 30;
+                "speedCurve" = [
+                  {
+                    "temp" = 0;
+                    "speed" = 15;
+                  }
+                  {
+                    "temp" = 50;
+                    "speed" = 15;
+                  }
+                  {
+                    "temp" = 65;
+                    "speed" = 25;
+                  }
+                  {
+                    "temp" = 70;
+                    "speed" = 35;
+                  }
+                  {
+                    "temp" = 75;
+                    "speed" = 50;
+                  }
+                  {
+                    "temp" = 85;
+                    "speed" = 100;
+                  }
+                ];
+              };
+            };
+            ```
+        '';
+      }
+    ];
+
   };
 
   meta = {
