@@ -23,6 +23,8 @@ stdenv.mkDerivation rec {
     libmad
   ];
 
+  env.NIX_CFLAGS_COMPILE = "-std=gnu17";
+
   src = fetchurl {
     url = "https://www.adebenham.com/files/mtp/mtpfs-${version}.tar.gz";
     sha256 = "07acrqb17kpif2xcsqfqh5j4axvsa4rnh6xwnpqab5b9w5ykbbqv";
